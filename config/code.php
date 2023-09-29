@@ -4,11 +4,11 @@ include '../config/conn.php';
 session_start();
 
 //Start of admin Medicine
-if (isset($_POST['del_med'])){
+if (isset($_POST['del_med'])) {
     $med_id = $_POST['del_med'];
 
     $query = "DELETE FROM medicine WHERE id='$med_id'";
-    $query_run = mysqli_query($conn ,$query);
+    $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
         $_SESSION['msge'] = "Medicine Deleted Successfully";
@@ -110,11 +110,11 @@ if (isset($_POST['update_btn'])) {
 
 
 // Start of admin lab
-if (isset($_POST['del_lab'])){
+if (isset($_POST['del_lab'])) {
     $lab_id = $_POST['del_lab'];
 
     $query = "DELETE FROM lab WHERE id='$lab_id'";
-    $query_run = mysqli_query($conn ,$query);
+    $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
         $_SESSION['msge'] = "Laboratory Instrument Deleted Successfully";
@@ -149,11 +149,11 @@ if (isset($_POST['lupdate_btn'])) {
 
 
 //Start of staff Medicine
-if (isset($_POST['del_smed'])){
+if (isset($_POST['del_smed'])) {
     $med_id = $_POST['del_smed'];
 
     $query = "DELETE FROM medicine WHERE id='$med_id'";
-    $query_run = mysqli_query($conn ,$query);
+    $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
         $_SESSION['msg'] = "Medicine Deleted Successfully";
@@ -217,7 +217,7 @@ if (isset($_POST['supdate_btn'])) {
         $_SESSION['msge'] = "Updated Successfully";
         header('Location: ../staff/medicine.php');
         exit(0);
-    }else {
+    } else {
         $_SESSION['msg'] = "Something Went Wrong";
         header('Location:../admin/doctor.php');
         exit(0);
@@ -229,11 +229,11 @@ if (isset($_POST['supdate_btn'])) {
 
 //Start of Doctor
 
-if (isset($_POST['del_doc'])){
+if (isset($_POST['del_doc'])) {
     $doc_id = $_POST['del_doc'];
 
     $query = "DELETE FROM doctor WHERE id='$doc_id'";
-    $query_run = mysqli_query($conn ,$query);
+    $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
         $_SESSION['msg'] = "Doctor Deleted Successfully";
@@ -249,6 +249,8 @@ if (isset($_POST['del_doc'])){
 if (isset($_POST['add_doc'])) {
 
     $fname = $_POST['fname'];
+    $mname = $_POST['mname'];
+    $lname = $_POST['lname'];
     $cn = $_POST['cn'];
     $addrss = $_POST['addrss'];
     $uname = $_POST['uname'];
@@ -256,48 +258,47 @@ if (isset($_POST['add_doc'])) {
     $pass = $_POST['pass'];
     $cpass = $_POST['cpass'];
 
-    if ($pass == $cpass){
+    if ($pass == $cpass) {
 
-    $checkdn = "SELECT fname FROM doctor WHERE fname='$fname'";
-    $checkdn_run = mysqli_query($conn, $checkdn);
+        $checkdn = "SELECT fname FROM doctor WHERE fname='$fname'";
+        $checkdn_run = mysqli_query($conn, $checkdn);
 
-    if (mysqli_num_rows($checkdn_run) > 0) {
+        if (mysqli_num_rows($checkdn_run) > 0) {
 
-        $_SESSION['msg'] = "Doctor Already Exist";
-        header('Location: ../admin/doctor.php');
-        exit(0);
-    }
+            $_SESSION['msg'] = "Doctor Already Exist";
+            header('Location: ../admin/doctor.php');
+            exit(0);
+        }
 
-    $query = "INSERT INTO doctor (fname, cn, addrss, uname, email, password)
-    VALUES ('$fname','$cn','$addrss','$uname','$eml','$pass')";
-    $query_run = mysqli_query($conn, $query);
+        $query = "INSERT INTO doctor (fname,mname,lname, cn, addrss, uname, email, password)
+    VALUES ('$fname','$mname','$lname','$cn','$addrss','$uname','$eml','$pass')";
+        $query_run = mysqli_query($conn, $query);
 
-    if ($query_run) {
-        $_SESSION['msge'] = "Registered Successfully";
-        header('Location: ../admin/doctor.php');
-        exit(0);
+        if ($query_run) {
+            $_SESSION['msge'] = "Registered Successfully";
+            header('Location: ../admin/doctor.php');
+            exit(0);
+        } else {
+            $_SESSION['msg'] = "Something Went Wrong";
+            header('Location:../admin/doctor.php');
+            exit(0);
+        }
     } else {
-        $_SESSION['msg'] = "Something Went Wrong";
+        $_SESSION['msg'] = "Password and Confirm Password does not match";
         header('Location:../admin/doctor.php');
         exit(0);
     }
-}else {
-    $_SESSION['msg'] = "Password and Confirm Password does not match";
-    header('Location:../admin/doctor.php');
-    exit(0);
-}
-
 }
 //End of Doctor
 
 
 //Start of Staff
 
-if (isset($_POST['del_staff'])){
+if (isset($_POST['del_staff'])) {
     $staff_id = $_POST['del_staff'];
 
     $query = "DELETE FROM staff WHERE id='$staff_id'";
-    $query_run = mysqli_query($conn ,$query);
+    $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
         $_SESSION['msg'] = "Staff Deleted Successfully";
@@ -312,66 +313,59 @@ if (isset($_POST['del_staff'])){
 
 if (isset($_POST['add_staff'])) {
 
-    $fname = $_POST['fname'];
-    $cn = $_POST['cn'];
-    $addrss = $_POST['addrss'];
-    $uname = $_POST['uname'];
-    $eml = $_POST['eml'];
-    $pass = $_POST['pass'];
-    $cpass = $_POST['cpass'];
+    extract($_POST);
 
-    if ($pass == $cpass){
+    if ($pass == $cpass) {
 
-    $checkdn = "SELECT fname FROM staff WHERE fname='$fname'";
-    $checkdn_run = mysqli_query($conn, $checkdn);
+        $checkdn = "SELECT fname FROM staff WHERE fname='$fname'";
+        $checkdn_run = mysqli_query($conn, $checkdn);
 
-    if (mysqli_num_rows($checkdn_run) > 0) {
+        if (mysqli_num_rows($checkdn_run) > 0) {
 
-        $_SESSION['msg'] = "Staff Already Exist";
-        header('Location: ../admin/staff.php');
-        exit(0);
-    }
+            $_SESSION['msg'] = "Staff Already Exist";
+            header('Location: ../admin/staff.php');
+            exit(0);
+        }
 
-    $checkeml = "SELECT email FROM staff WHERE email='$eml'";
-    $checkeml_run = mysqli_query($conn, $checkeml);
+        $checkeml = "SELECT email FROM staff WHERE email='$eml'";
+        $checkeml_run = mysqli_query($conn, $checkeml);
 
-    if (mysqli_num_rows($checkeml_run) > 0) {
+        if (mysqli_num_rows($checkeml_run) > 0) {
 
-        $_SESSION['msg'] = "Email Already Exist";
-        header('Location: ../admin/staff.php');
-        exit(0);
-    }
+            $_SESSION['msg'] = "Email Already Exist";
+            header('Location: ../admin/staff.php');
+            exit(0);
+        }
 
-    $query = "INSERT INTO staff (fname, cn, addrss, uname, email, password)
-    VALUES ('$fname','$cn','$addrss','$uname','$eml','$pass')";
-    $query_run = mysqli_query($conn, $query);
+        $query = "INSERT INTO staff (fname,mname,lname, cn, uname, email, password, province_id, city_id, barangay_id, house_no, zip_code)
+    VALUES ('$fname','$mname','$lname','$cn','$uname','$eml','$pass','$province_id','$barangay_id','$house_no','$zip_code')";
+        $query_run = mysqli_query($conn, $query);
 
-    if ($query_run) {
-        $_SESSION['msge'] = "Registered Successfully";
-        header('Location: ../admin/staff.php');
-        exit(0);
+        if ($query_run) {
+            $_SESSION['msge'] = "Registered Successfully";
+            header('Location: ../admin/staff.php');
+            exit(0);
+        } else {
+            $_SESSION['msg'] = "Something Went Wrong";
+            header('Location:../admin/staff.php');
+            exit(0);
+        }
     } else {
-        $_SESSION['msg'] = "Something Went Wrong";
+        $_SESSION['msg'] = "Password and Confirm Password does not match";
         header('Location:../admin/staff.php');
         exit(0);
     }
-}else {
-    $_SESSION['msg'] = "Password and Confirm Password does not match";
-    header('Location:../admin/staff.php');
-    exit(0);
-}
-
 }
 //End of Staff
 
 
 //Start of Doctor
 
-if (isset($_POST['del_doc'])){
+if (isset($_POST['del_doc'])) {
     $doc_id = $_POST['del_doc'];
 
     $query = "DELETE FROM doctor WHERE id='$doc_id'";
-    $query_run = mysqli_query($conn ,$query);
+    $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
         $_SESSION['msg'] = "Doctor Deleted Successfully";
@@ -386,56 +380,49 @@ if (isset($_POST['del_doc'])){
 
 if (isset($_POST['add_doc'])) {
 
-    $fname = $_POST['fname'];
-    $cn = $_POST['cn'];
-    $addrss = $_POST['addrss'];
-    $uname = $_POST['uname'];
-    $eml = $_POST['eml'];
-    $pass = $_POST['pass'];
-    $cpass = $_POST['cpass'];
+    extract($_POST);
 
-    if ($pass == $cpass){
+    if ($pass == $cpass) {
 
-    $checkdn = "SELECT fname FROM doctor WHERE fname='$fname'";
-    $checkdn_run = mysqli_query($conn, $checkdn);
+        $checkdn = "SELECT fname FROM doctor WHERE fname='$fname'";
+        $checkdn_run = mysqli_query($conn, $checkdn);
 
-    if (mysqli_num_rows($checkdn_run) > 0) {
+        if (mysqli_num_rows($checkdn_run) > 0) {
 
-        $_SESSION['msg'] = "Doctor Already Exist";
-        header('Location: ../admin/doctor.php');
-        exit(0);
-    }
+            $_SESSION['msg'] = "Doctor Already Exist";
+            header('Location: ../admin/doctor.php');
+            exit(0);
+        }
 
-    $query = "INSERT INTO doctor (fname, cn, addrss, uname, email, password)
-    VALUES ('$fname','$cn','$addrss','$uname','$eml','$pass')";
-    $query_run = mysqli_query($conn, $query);
+        $query = "INSERT INTO doctor (fname,mname,lname, cn, uname, email, password, province_id, city_id, barangay_id, house_no, zip_code)
+    VALUES ('$fname','$mname','$lname','$cn','$uname','$eml','$pass','$province_id','$barangay_id','$house_no','$zip_code')";
+        $query_run = mysqli_query($conn, $query);
 
-    if ($query_run) {
-        $_SESSION['msge'] = "Registered Successfully";
-        header('Location: ../admin/doctor.php');
-        exit(0);
+        if ($query_run) {
+            $_SESSION['msge'] = "Registered Successfully";
+            header('Location: ../admin/doctor.php');
+            exit(0);
+        } else {
+            $_SESSION['msg'] = "Something Went Wrong";
+            header('Location:../admin/doctor.php');
+            exit(0);
+        }
     } else {
-        $_SESSION['msg'] = "Something Went Wrong";
+        $_SESSION['msg'] = "Password and Confirm Password does not match";
         header('Location:../admin/doctor.php');
         exit(0);
     }
-}else {
-    $_SESSION['msg'] = "Password and Confirm Password does not match";
-    header('Location:../admin/doctor.php');
-    exit(0);
-}
-
 }
 //End of Doctor
 
 
 //Start of Staff
 
-if (isset($_POST['del_admin'])){
+if (isset($_POST['del_admin'])) {
     $admin_id = $_POST['del_admin'];
 
     $query = "DELETE FROM admin WHERE id='$admin_id'";
-    $query_run = mysqli_query($conn ,$query);
+    $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
         $_SESSION['msg'] = "Staff Deleted Successfully";
@@ -450,95 +437,140 @@ if (isset($_POST['del_admin'])){
 
 if (isset($_POST['add_admin'])) {
 
-    $fname = $_POST['fname'];
-    $cn = $_POST['cn'];
-    $addrss = $_POST['addrss'];
-    $uname = $_POST['uname'];
-    $eml = $_POST['eml'];
-    $pass = $_POST['pass'];
-    $cpass = $_POST['cpass'];
+    extract($_POST);
 
-    if ($pass == $cpass){
+    if ($pass == $cpass) {
 
-    $checkan = "SELECT fname FROM admin WHERE fname='$fname'";
-    $checkan_run = mysqli_query($conn, $checkan);
+        $checkan = "SELECT fname FROM admin WHERE fname='$fname'";
+        $checkan_run = mysqli_query($conn, $checkan);
 
-    if (mysqli_num_rows($checkan_run) > 0) {
+        if (mysqli_num_rows($checkan_run) > 0) {
 
-        $_SESSION['msg'] = "Staff Already Exist";
-        header('Location: ../admin/administrator.php');
-        exit(0);
-    }
+            $_SESSION['msg'] = "Admin Already Exist";
+            header('Location: ../admin/administrator.php');
+            exit(0);
+        }
 
-    $checkeml = "SELECT email FROM admin WHERE email='$eml'";
-    $checkeml_run = mysqli_query($conn, $checkeml);
+        $checkeml = "SELECT email FROM admin WHERE email='$eml'";
+        $checkeml_run = mysqli_query($conn, $checkeml);
 
-    if (mysqli_num_rows($checkeml_run) > 0) {
+        if (mysqli_num_rows($checkeml_run) > 0) {
 
-        $_SESSION['msg'] = "Email Already Exist";
-        header('Location: ../admin/administrator.php');
-        exit(0);
-    }
+            $_SESSION['msg'] = "Email Already Exist";
+            header('Location: ../admin/administrator.php');
+            exit(0);
+        }
 
-    $query = "INSERT INTO admin (fname, cn, addrss, uname, email, password)
-    VALUES ('$fname','$cn','$addrss','$uname','$eml','$pass')";
-    $query_run = mysqli_query($conn, $query);
+        $query = "INSERT INTO admin (fname,mname,lname, cn, uname, email, password, province_id, city_id, barangay_id, house_no, zip_code)
+    VALUES ('$fname','$mname','$lname','$cn','$uname','$eml','$pass','$province_id','$barangay_id','$house_no','$zip_code')";
+        $query_run = mysqli_query($conn, $query);
 
-    if ($query_run) {
-        $_SESSION['msge'] = "Registered Successfully";
-        header('Location: ../admin/administrator.php');
-        exit(0);
+        if ($query_run) {
+            $_SESSION['msge'] = "Registered Successfully";
+            header('Location: ../admin/administrator.php');
+            exit(0);
+        } else {
+            $_SESSION['msg'] = "Something Went Wrong";
+            header('Location:../admin/administrator.php');
+            exit(0);
+        }
     } else {
-        $_SESSION['msg'] = "Something Went Wrong";
+        $_SESSION['msg'] = "Password and Confirm Password does not match";
         header('Location:../admin/administrator.php');
         exit(0);
     }
-}else {
-    $_SESSION['msg'] = "Password and Confirm Password does not match";
-    header('Location:../admin/administrator.php');
-    exit(0);
-}
-
 }
 //End of Staff
 
 // Start of patient
 
-	if (isset($_POST['approve'])){
-		$appid = $_POST['appid'];
-		$query = "UPDATE patient SET status='1' WHERE id = '$appid'";
+if (isset($_POST['add_patient'])) {
+
+    extract($_POST);
+
+    if ($pass == $cpass) {
+
+        $checkan = "SELECT fname FROM patient WHERE fname='$fname'";
+        $checkan_run = mysqli_query(
+            $conn,
+            $checkan
+        );
+
+        if (
+            mysqli_num_rows($checkan_run) > 0
+        ) {
+
+            $_SESSION['msg'] = "Patient Already Exist";
+            header('Location: ../admin/patients.php');
+            exit(0);
+        }
+
+        $checkeml = "SELECT patient FROM admin WHERE email='$eml'";
+        $checkeml_run = mysqli_query($conn, $checkeml);
+
+        if (
+            mysqli_num_rows($checkeml_run) > 0
+        ) {
+
+            $_SESSION['msg'] = "Email Already Exist";
+            header('Location: ../admin/patients.php');
+            exit(0);
+        }
+
+        $query = "INSERT INTO patient (fname,mname,lname, cn, uname, email, password, province_id, city_id, barangay_id, house_no, zip_code)
+    VALUES ('$fname','$mname','$lname','$cn','$uname','$eml','$pass','$province_id','$barangay_id','$house_no','$zip_code')";
         $query_run = mysqli_query($conn, $query);
 
         if ($query_run) {
-            $_SESSION['msge'] = "Updated Successfully";
-            header('Location: ../staff/appointment.php');
+            $_SESSION['msge'] = "Registered Successfully";
+            header('Location: ../admin/patients.php');
+            exit(0);
+        } else {
+            $_SESSION['msg'] = "Something Went Wrong";
+            header('Location:../admin/patients.php');
             exit(0);
         }
-	}
-	
+    } else {
+        $_SESSION['msg'] = "Password and Confirm Password does not match";
+        header('Location:../admin/patients.php');
+        exit(0);
+    }
+}
+
+if (isset($_POST['approve'])) {
+    $appid = $_POST['appid'];
+    $query = "UPDATE patient SET status='1' WHERE id = '$appid'";
+    $query_run = mysqli_query($conn, $query);
+
+    if ($query_run) {
+        $_SESSION['msge'] = "Updated Successfully";
+        header('Location: ../staff/appointment.php');
+        exit(0);
+    }
+}
+
 
 // add appointment
 
-if (isset($_POST['add_app'])){
-        $fname = $_POST['fname'];
-		$date = $_POST['date'];
-		$time = $_POST['time'];
-		$remark = $_POST['remark'];
-		$status = $_POST['status'];
+if (isset($_POST['add_app'])) {
+    $fname = $_POST['fname'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $remark = $_POST['remark'];
+    $status = $_POST['status'];
 
-		$sql = "INSERT INTO patient(fname,date,time,remark,status)VALUES('$fname','$date','$time','$remark','$status')";
+    $sql = "INSERT INTO patient(fname,date,time,remark,status)VALUES('$fname','$date','$time','$remark','$status')";
 
-		$run = mysqli_query($conn,$sql);
+    $run = mysqli_query($conn, $sql);
 
-		if($run == true){
-			
-            $_SESSION['msge'] = "Registered Successfully";
-            header('Location: ../patient/appointment.php');
-            exit(0);
-		}else{
-            $_SESSION['msge'] = "Somthing Went Wrong";
-            header('Location: ../patient/appointment.php');
-            exit(0);
-		}
-	}
+    if ($run == true) {
 
+        $_SESSION['msge'] = "Registered Successfully";
+        header('Location: ../patient/appointment.php');
+        exit(0);
+    } else {
+        $_SESSION['msge'] = "Somthing Went Wrong";
+        header('Location: ../patient/appointment.php');
+        exit(0);
+    }
+}

@@ -22,18 +22,64 @@ include('../config/conn.php');
 
         <form action="../config/code.php" method="post">
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Full Name:</label>
+            <label for="recipient-name" class="col-form-label">First Name:</label>
             <input type="text" name="fname" class="form-control" id="recipient-name" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Middle Name:</label>
+            <input type="text" name="mname" class="form-control" id="recipient-name" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Last Name:</label>
+            <input type="text" name="lname" class="form-control" id="recipient-name" required>
           </div>
 
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Contact Number:</label>
-            <input type="text" name="cn" class="form-control" id="recipient-name" required>
+            <div class="d-flex">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">+63</div>
+                </div>
+                <input type="number" name="cn" class="form-control" id="recipient-name" required minlength="10" maxlength="10">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">House #:</label>
+            <input type="text" name="house_no" class="form-control" id="recipient-name" required>
           </div>
 
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Address:</label>
-            <input type="text" name="addrss" class="form-control" id="recipient-name" required>
+            <label for="recipient-name" class="col-form-label">Province:</label>
+            <select name="province_id" id="province_id" class="form-control">
+              <?php foreach (mysqli_query($conn, "SELECT * from tbl_province order by name asc") as $row) { ?>
+                <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">City:</label>
+            <select name="city_id" id="city_id" class="form-control">
+              <?php foreach (mysqli_query($conn, "SELECT * from tbl_city where province_id = '1401' order by name asc") as $row) { ?>
+                <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+              <?php } ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Barangay:</label>
+            <select name="barangay_id" id="barangay_id" class="form-control">
+              <?php foreach (mysqli_query($conn, "SELECT * from tbl_barangay where city_id = '0' order by name asc") as $row) { ?>
+                <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+              <?php } ?>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Zip Code:</label>
+            <input type="number" name="zip_code" class="form-control" id="recipient-name" required minlength="4" maxlength="4">
           </div>
 
           <h6 class="m-0 font-weight-bold text-primary">
@@ -55,7 +101,7 @@ include('../config/conn.php');
             <label for="recipient-name" class="col-form-label">Password:</label>
             <input type="password" name="pass" class="form-control" id="Show" required>
           </div>
-          
+
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Confirm Password:</label>
             <input type="password" name="cpass" class="form-control" id="show" required>
@@ -79,7 +125,7 @@ include('../config/conn.php');
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-<?php include ('msg.php'); ?>
+  <?php include('msg.php'); ?>
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -95,14 +141,13 @@ include('../config/conn.php');
               <th>Doctor's Name</th>
               <th>Email</th>
               <th>Contact Number</th>
-              <th>View</th>
-              <th>Delete</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
             <?php
-            
+
             $query = "SELECT * FROM doctor";
             $query_run = mysqli_query($conn, $query);
 
@@ -111,20 +156,20 @@ include('../config/conn.php');
               foreach ($query_run as $row) {
             ?><tr>
                   <td><?= $row['id']; ?></td>
-                  <td>Dr. <?= $row['fname']; ?></td>
+                  <td>Dr. <?= $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']; ?></td>
                   <td><?= $row['email']; ?></td>
-                  <td><?= $row['cn']; ?></td>
-                  <td><a href="vdoctor.php?id=<?=$row['id'];?>" class="btn btn-success">View</a></td>
-                  <td>
-                  <form action="../config/code.php" method="post">
-                  <button type="submit" name="del_doc" value="<?=$row['id'];?>" class="btn btn-danger">Delete</a>
-                  </form>
-                </td>
+                  <td>+63<?= $row['cn']; ?></td>
+                  <td class="d-flex"><a href="vdoctor.php?id=<?= $row['id']; ?>" class="btn btn-success">View</a>
+                    <form action="../config/code.php" method="post">
+                      <button type="submit" name="del_doc" value="<?= $row['id']; ?>" class="btn btn-danger">Delete</a>
+                    </form>
+                  </td>
+
               <?php
               }
-            } 
+            }
 
-            ?>
+              ?>
 
           </tbody>
         </table>
@@ -133,7 +178,36 @@ include('../config/conn.php');
   </div>
 
 
+  <script>
+    let province_dropdown = document.getElementById('province_id');
+    let city_dropdown = document.getElementById('city_id');
+    let barangay_dropdown = document.getElementById('barangay_id');
 
+    province_dropdown.addEventListener('change', function() {
+      get_psgc(city_dropdown, "province_id", province_dropdown.value);
+      get_psgc(barangay_dropdown, "city_id", city_dropdown.value);
+    });
+
+    city_dropdown.addEventListener('change', function() {
+      get_psgc(barangay_dropdown, "city_id", city_dropdown.value);
+    });
+
+
+    function get_psgc(element, target, value) {
+      return fetch("../get_psgc.php?" + target + "=" + value).then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
+        })
+        .then(data => {
+          element.innerHTML = data;
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+  </script>
   <?php
 
   include('../includes/scripts.php');

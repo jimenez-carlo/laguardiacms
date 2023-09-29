@@ -30,16 +30,16 @@ if (isset($_POST['login_btn'])) {
         ];
 
         //1 = admin
-        if ($_SESSION['auth'] ) {
+        if ($_SESSION['auth']) {
             header("Location: ../admin/admin.php");
             exit(0);
             //0 = patient
-        }// } elseif ($_SESSION['auth_role'] == '0') {
+        } // } elseif ($_SESSION['auth_role'] == '0') {
         //     header("Location: ../patient/patient.php");
         //     exit(0);
         // }
     }
-}    
+}
 
 if (isset($_POST['login_btn'])) {
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
@@ -70,16 +70,16 @@ if (isset($_POST['login_btn'])) {
         ];
 
         //1 = admin
-        if ($_SESSION['auth'] ) {
+        if ($_SESSION['auth']) {
             header("Location: ../doctor/doctor.php");
             exit(0);
             //0 = patient
-        }// } elseif ($_SESSION['auth_role'] == '0') {
+        } // } elseif ($_SESSION['auth_role'] == '0') {
         //     header("Location: ../patient/patient.php");
         //     exit(0);
         // }
     }
-}    
+}
 
 if (isset($_POST['login_btn'])) {
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
@@ -109,16 +109,16 @@ if (isset($_POST['login_btn'])) {
         ];
 
         //1 = admin
-        if ($_SESSION['auth'] ) {
+        if ($_SESSION['auth']) {
             header("Location: ../staff/staff.php");
             exit(0);
             //0 = patient
-        }// } elseif ($_SESSION['auth_role'] == '0') {
+        } // } elseif ($_SESSION['auth_role'] == '0') {
         //     header("Location: ../patient/patient.php");
         //     exit(0);
         // }
     }
-}  
+}
 
 if (isset($_POST['login_btn'])) {
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
@@ -148,26 +148,22 @@ if (isset($_POST['login_btn'])) {
         ];
 
         //1 = admin
-        if ($_SESSION['auth'] ) {
+        if ($_SESSION['auth']) {
             header("Location: ../patient/patient.php");
             exit(0);
             //0 = patient
-        }// } elseif ($_SESSION['auth_role'] == '0') {
+        } // } elseif ($_SESSION['auth_role'] == '0') {
         //     header("Location: ../patient/patient.php");
         //     exit(0);
         // }
 
     } else {
         $_SESSION['msg'] = "Invalid Email or Password";
-        header("Location: ../login.php");
+        header("Location: ../index.php");
         exit(0);
     }
-
 } else {
     $_SESSION['msg'] = "You Are Not allowed to access this file";
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     exit(0);
 }
-
-
-

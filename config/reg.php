@@ -34,9 +34,8 @@ if (isset($_POST['reg_btn'])) {
 
             if (($user_query_run)) {
                 $_SESSION['msge'] = "Registration Successfully";
-                header("Location: ../login.php");
+                header("Location: ../index.php");
                 exit(0);
-
             } else {
                 $_SESSION['msg'] = "Something Went Wrong";
                 header("Location: ../register.php");
@@ -48,7 +47,6 @@ if (isset($_POST['reg_btn'])) {
         header("Location: ../register.php");
         exit(0);
     }
-
 } else {
     header("Location: ../register.php");
     exit(0);
