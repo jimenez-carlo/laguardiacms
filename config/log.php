@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "../config/conn.php";
 
 if (isset($_POST['login_btn'])) {
@@ -20,7 +19,7 @@ if (isset($_POST['login_btn'])) {
             // $user_pass = $data['user_pass'];
         }
 
-        $_SESSION['auth'] = true;
+        $_SESSION['auth'] = 1;
         // $_SESSION['auth_role'] = "$role_as";
         $_SESSION['auth_user'] = [
             'user_id' => $user_id,
@@ -60,7 +59,7 @@ if (isset($_POST['login_btn'])) {
             // $user_pass = $data['user_pass'];
         }
 
-        $_SESSION['auth'] = true;
+        $_SESSION['auth'] = 2;
         // $_SESSION['auth_role'] = "$role_as";
         $_SESSION['auth_user'] = [
             'user_id' => $user_id,
@@ -99,7 +98,7 @@ if (isset($_POST['login_btn'])) {
             // $user_pass = $data['user_pass'];
         }
 
-        $_SESSION['auth'] = true;
+        $_SESSION['auth'] = 3;
         // $_SESSION['auth_role'] = "$role_as";
         $_SESSION['auth_user'] = [
             'user_id' => $user_id,
@@ -138,7 +137,7 @@ if (isset($_POST['login_btn'])) {
             // $user_pass = $data['user_pass'];
         }
 
-        $_SESSION['auth'] = true;
+        $_SESSION['auth'] = 4;
         // $_SESSION['auth_role'] = "$role_as";
         $_SESSION['auth_user'] = [
             'user_id' => $user_id,

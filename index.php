@@ -1,4 +1,22 @@
-<?php session_start();?>
+<?php
+require_once('config/conn.php');
+if (isset($_SESSION['auth'])) {
+  switch ($_SESSION['auth']) {
+    case 1:
+      return header('location:admin/admin.php');
+      break;
+    case 2:
+      return header('location:doctor/doctor.php');
+      break;
+    case 3:
+      return header('location:patient/patient.php');
+      break;
+    case 4:
+      return header('location:staff/staff.php');
+      break;
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,31 +49,31 @@
 
         <div class="col-12 col-md-8 col-lg-6 col-xl-6">
           <div class="card shadow-2-strong" style="border-radius: 8px;">
-          
+
             <div class="card-body p-5 text-center">
-            <?php include ('msg.php');?>
+              <?php include('msg.php'); ?>
               <img src="img/logo.png" height="100" width="100">
               <br> <br>
               <h3 class="mb-5">Laguardia Medical and Diagnostic Clinic Management System</h3>
 
               <form action="config/log.php" method="post">
-              <div class="form-outline mb-4">
-                <label>Username</label>
-                <input type="text" name="uname" id="" class="form-control form-control-lg" required/>
-              </div>
+                <div class="form-outline mb-4">
+                  <label>Username</label>
+                  <input type="text" name="uname" id="" class="form-control form-control-lg" required />
+                </div>
 
-              <div class="form-outline mb-4">
-                <label class="form-label" for="typePasswordX-2">Password</label>
-                <input type="password" name="pass" id="Show" class="form-control form-control-lg" required />
-              </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="typePasswordX-2">Password</label>
+                  <input type="password" name="pass" id="Show" class="form-control form-control-lg" required />
+                </div>
 
-              <!-- Checkbox -->
-              <div class="form-check d-flex justify-content-start mb-4">
-                <input class="form-check-input" type="checkbox" value="" id="form1Example3" onclick="myFunction()" />
-                <label class="form-check-label"> Show Password </label>
-              </div>
+                <!-- Checkbox -->
+                <div class="form-check d-flex justify-content-start mb-4">
+                  <input class="form-check-input" type="checkbox" value="" id="form1Example3" onclick="myFunction()" />
+                  <label class="form-check-label"> Show Password </label>
+                </div>
 
-              <button class="btn btn-primary btn-lg btn-block" type="submit" name="login_btn">Login</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit" name="login_btn">Login</button>
               </form>
               <br>
               <div class="text-center">
@@ -68,7 +86,7 @@
         </div>
       </div>
     </div>
-</section>
+  </section>
   <footer class="sticky-footer">
     <div class="container my-auto">
       <div class="copyright text-center my-auto">

@@ -1,8 +1,6 @@
 <?php
 include '../config/conn.php';
 
-session_start();
-
 //Start of admin Medicine
 if (isset($_POST['del_med'])) {
     $med_id = $_POST['del_med'];

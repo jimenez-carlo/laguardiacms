@@ -1,6 +1,6 @@
 <?php
 include '../config/conn.php';
-session_start();
+
 
 include '../includes/navbar.php';
 include '../includes/header.php';
@@ -94,7 +94,7 @@ include '../admin/topbar.php';
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Total Patients</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?php
+                                <?php
                                 $query = "SELECT id FROM patient ORDER BY id";
                                 $query_run = mysqli_query($conn, $query);
                                 $row = mysqli_num_rows($query_run);
@@ -119,7 +119,7 @@ include '../admin/topbar.php';
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Medicines</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?php
+                                <?php
                                 $query = "SELECT id FROM medicine ORDER BY id";
                                 $query_run = mysqli_query($conn, $query);
                                 $row = mysqli_num_rows($query_run);

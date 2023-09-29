@@ -1,5 +1,4 @@
 <?php
-session_start();
 include('../includes/header.php');
 include('../includes/navbar.php');
 include('../staff/sidebar.php');
@@ -53,10 +52,10 @@ include('../staff/topbar.php');
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-<?php include('../msg.php'); ?>
+  <?php include('../msg.php'); ?>
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
-    
+
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Laboratory Instruments</h6>
     </div>
@@ -73,28 +72,28 @@ include('../staff/topbar.php');
           </thead>
           <tbody>
             <?php
-          include('../config/conn.php');
-          $query = "SELECT * FROM lab";
-          $query_run = mysqli_query($conn, $query);
+            include('../config/conn.php');
+            $query = "SELECT * FROM lab";
+            $query_run = mysqli_query($conn, $query);
 
-          if (mysqli_num_rows($query_run) > 0) {
+            if (mysqli_num_rows($query_run) > 0) {
 
-            foreach ($query_run as $row) {
-          ?><tr>
-                <td><?= $row['si']; ?></td>
-                <td><?= $row['disc']; ?></td>
-                <td><a href="editlab.php?id=<?=$row['id'];?>" class="btn btn-success">Update</a></td>
-                <td>
-                  <form action="../config/code.php" method="post">
-                  <button type="submit" name="sdel_lab" value="<?=$row['id'];?>" class="btn btn-danger">Delete</a>
-                  </form>
-                </td>
-              </tr>
-          <?php
+              foreach ($query_run as $row) {
+            ?><tr>
+                  <td><?= $row['si']; ?></td>
+                  <td><?= $row['disc']; ?></td>
+                  <td><a href="editlab.php?id=<?= $row['id']; ?>" class="btn btn-success">Update</a></td>
+                  <td>
+                    <form action="../config/code.php" method="post">
+                      <button type="submit" name="sdel_lab" value="<?= $row['id']; ?>" class="btn btn-danger">Delete</a>
+                    </form>
+                  </td>
+                </tr>
+            <?php
+              }
             }
-          }
 
-          ?>
+            ?>
 
           </tbody>
         </table>

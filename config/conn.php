@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $host = "localhost";
 $uname = "root";
 $pass = "";
@@ -11,4 +11,3 @@ if (!$conn) {
     header("Location: errors/dberror.php");
     die();
 }
-?>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 include('../includes/header.php');
 include('../includes/navbar.php');
 include('../staff/sidebar.php');
@@ -64,7 +63,7 @@ include('../staff/topbar.php');
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-<?php include ('../msg.php'); ?>
+  <?php include('../msg.php'); ?>
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -100,10 +99,10 @@ include('../staff/topbar.php');
                 <td><?= $row['mt']; ?></td>
                 <td>₱ <?= $row['price']; ?></td>
                 <td><?= $row['stock']; ?></td>
-                <td><a href="editmed.php?id=<?=$row['id'];?>" class="btn btn-success">Update</a></td>
+                <td><a href="editmed.php?id=<?= $row['id']; ?>" class="btn btn-success">Update</a></td>
                 <td>
                   <form action="../config/code.php" method="post">
-                  <button type="submit" name="del_smed" value="<?=$row['id'];?>" class="btn btn-danger">Delete</a>
+                    <button type="submit" name="del_smed" value="<?= $row['id']; ?>" class="btn btn-danger">Delete</a>
                   </form>
                 </td>
               </tr>
