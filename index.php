@@ -1,18 +1,18 @@
 <?php
-require_once('config/conn.php');
+require_once('config/functions.php');
 if (isset($_SESSION['auth'])) {
   switch ($_SESSION['auth']) {
     case 1:
-      return header('location:admin/admin.php');
+      return header('location:pages/admin/index.php');
       break;
     case 2:
-      return header('location:doctor/doctor.php');
+      return header('location:pages/doctor/index.php');
       break;
     case 3:
-      return header('location:patient/patient.php');
+      return header('location:pages/patient/index.php');
       break;
     case 4:
-      return header('location:staff/staff.php');
+      return header('location:pages/staff/index.php');
       break;
   }
 }
@@ -51,20 +51,20 @@ if (isset($_SESSION['auth'])) {
           <div class="card shadow-2-strong" style="border-radius: 8px;">
 
             <div class="card-body p-5 text-center">
-              <?php include('msg.php'); ?>
+              <?= isset($_POST['login_btn']) ? login() : '' ?>
               <img src="img/logo.png" height="100" width="100">
               <br> <br>
               <h3 class="mb-5">Laguardia Medical and Diagnostic Clinic Management System</h3>
 
-              <form action="config/log.php" method="post">
+              <form method="post">
                 <div class="form-outline mb-4">
                   <label>Username</label>
-                  <input type="text" name="uname" id="" class="form-control form-control-lg" required />
+                  <input type="text" name="uname" id="" class="form-control form-control-lg" required value="<?= isset($_POST['uname']) ? $_POST['uname'] : '' ?>" />
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="typePasswordX-2">Password</label>
-                  <input type="password" name="pass" id="Show" class="form-control form-control-lg" required />
+                  <input type="password" name="pass" id="Show" class="form-control form-control-lg" required value="<?= isset($_POST['pass']) ? $_POST['pass'] : '' ?>" />
                 </div>
 
                 <!-- Checkbox -->

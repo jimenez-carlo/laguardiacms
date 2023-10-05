@@ -5,7 +5,9 @@ if (isset($_POST['login_btn'])) {
     $uname = mysqli_real_escape_string($conn, $_POST['uname']);
     $pass = mysqli_real_escape_string($conn, $_POST['pass']);
 
-    $login_query = "SELECT * FROM admin  WHERE uname = '$uname' AND password = '$pass' LIMIT 1";
+    $login_query = "SELECT * from (select a.*,1 as access_id FROM admin a union select d.*,2 as access_id from doctor d union select s.*,4 as access_id from staff s union 
+select p.id,p.fname,p.cn,p.addrss,p.email,p.uname,p.password,p.mname,p.lname,p.province_id,p.city_id,p.barangay_id,p.house_no,p.zip_code,p.pic,3 as access_id from patient p) x where (x.uname = '$uname' OR x.email = '$uname') AND password = '$pass'
+order by x.access_id asc limit 1";
     $login_query_run = mysqli_query($conn, $login_query);
 
     if (mysqli_num_rows($login_query_run) > 0) {
@@ -30,11 +32,11 @@ if (isset($_POST['login_btn'])) {
 
         //1 = admin
         if ($_SESSION['auth']) {
-            header("Location: ../admin/admin.php");
+            header("Location: ../pages/admin/index.php");
             exit(0);
             //0 = patient
         } // } elseif ($_SESSION['auth_role'] == '0') {
-        //     header("Location: ../patient/patient.php");
+        //     header("Location: ../pages/patient/patient.php");
         //     exit(0);
         // }
     }
@@ -70,11 +72,11 @@ if (isset($_POST['login_btn'])) {
 
         //1 = admin
         if ($_SESSION['auth']) {
-            header("Location: ../doctor/doctor.php");
+            header("Location: ../pages/doctor/index.php");
             exit(0);
             //0 = patient
         } // } elseif ($_SESSION['auth_role'] == '0') {
-        //     header("Location: ../patient/patient.php");
+        //     header("Location: ../pages/patient/patient.php");
         //     exit(0);
         // }
     }
@@ -109,11 +111,11 @@ if (isset($_POST['login_btn'])) {
 
         //1 = admin
         if ($_SESSION['auth']) {
-            header("Location: ../staff/staff.php");
+            header("Location: ../pages/staff/index.php");
             exit(0);
             //0 = patient
         } // } elseif ($_SESSION['auth_role'] == '0') {
-        //     header("Location: ../patient/patient.php");
+        //     header("Location: ../pages/patient/patient.php");
         //     exit(0);
         // }
     }
@@ -148,21 +150,21 @@ if (isset($_POST['login_btn'])) {
 
         //1 = admin
         if ($_SESSION['auth']) {
-            header("Location: ../patient/patient.php");
+            header("Location: ../pages/patient/index.php");
             exit(0);
             //0 = patient
         } // } elseif ($_SESSION['auth_role'] == '0') {
-        //     header("Location: ../patient/patient.php");
+        //     header("Location: ../pages/patient/patient.php");
         //     exit(0);
         // }
 
     } else {
         $_SESSION['msg'] = "Invalid Email or Password";
-        header("Location: ../index.php");
+        header("Location: ../pages/index.php");
         exit(0);
     }
 } else {
     $_SESSION['msg'] = "You Are Not allowed to access this file";
-    header("Location: ../index.php");
+    header("Location: ../pages/index.php");
     exit(0);
 }

@@ -8,6 +8,6 @@ $dbname = "laguardiacms";
 $conn = mysqli_connect("$host", "$uname", "$pass", "$dbname");
 
 if (!$conn) {
-    header("Location: errors/dberror.php");
+    echo "<h1>Database Error!</h1>";
     die();
 }
