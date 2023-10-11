@@ -1,4 +1,5 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -14,7 +15,7 @@
               <div class="col-md-12">
                 <?php
                 if (isset($_POST['create_medicine'])) {
-                  echo "<script> $('#exampleModal').modal('show');</script>";
+                  // echo "<script> $('#exampleModal').modal('show');</script>";
                   echo create_medicine();
                 }
                 ?>
@@ -24,25 +25,30 @@
               <div class="col-md-12">
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Name:</label>
-                    <input type="text" name="name" class="form-control" id="recipient-name" required value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>">
+                    <label for="recipient-name" class="col-form-label">*Name:</label>
+                    <input type="text" name="name" class="form-control" id="recipient-name" required
+                      value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Description:</label>
-                    <textarea name="description" id="" cols="30" rows="2" class="form-control"><?= isset($_POST['description']) ? $_POST['description'] : '' ?></textarea>
+                    <label for="recipient-name" class="col-form-label">*Description:</label>
+                    <textarea name="description" id="" cols="30" rows="2"
+                      class="form-control"><?= isset($_POST['description']) ? $_POST['description'] : '' ?></textarea>
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Medicine Type:</label>
+                    <label for="recipient-name" class="col-form-label">*Medicine Type:</label>
                     <select name="type" id="type" class="form-control" required>
                       <option selected disabled>--SELECT--</option>
-                      <option value="Tablet" <?= (isset($_POST['type']) && "Tablet" == $_POST['type']) ? 'selected' : '' ?>>Tablet</option>
-                      <option value="Capsule" <?= (isset($_POST['type']) && "Capsule" == $_POST['type']) ? 'selected' : '' ?>>Capsule</option>
-                      <option value="Bottle" <?= (isset($_POST['type']) && "Bottle" == $_POST['type']) ? 'selected' : '' ?>>Bottle</option>
+                      <option value="Tablet"
+                        <?= (isset($_POST['type']) && "Tablet" == $_POST['type']) ? 'selected' : '' ?>>Tablet</option>
+                      <option value="Capsule"
+                        <?= (isset($_POST['type']) && "Capsule" == $_POST['type']) ? 'selected' : '' ?>>Capsule</option>
+                      <option value="Bottle"
+                        <?= (isset($_POST['type']) && "Bottle" == $_POST['type']) ? 'selected' : '' ?>>Bottle</option>
                     </select>
                   </div>
 
@@ -50,21 +56,24 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Price:</label>
-                    <input type="number" name="price" class="form-control" id="recipient-name" required value="<?= isset($_POST['price']) ? $_POST['price'] : '' ?>">
+                    <label for="recipient-name" class="col-form-label">*Price:</label>
+                    <input type="number" name="price" class="form-control" id="recipient-name" required
+                      value="<?= isset($_POST['price']) ? $_POST['price'] : '' ?>">
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Stock:</label>
-                    <input type="number" name="stock" class="form-control" id="recipient-name" value="<?= isset($_POST['stock']) ? $_POST['stock'] : '' ?>">
+                    <label for="recipient-name" class="col-form-label">*Stock:</label>
+                    <input type="number" name="stock" class="form-control" id="recipient-name"
+                      value="<?= isset($_POST['stock']) ? $_POST['stock'] : '' ?>">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Expiration Date:</label>
-                    <input type="date" name="expiration_date" class="form-control" id="recipient-name" value="<?= isset($_POST['expiration_date']) ? $_POST['expiration_date'] : '' ?>">
+                    <label for="recipient-name" class="col-form-label">*Expiration Date:</label>
+                    <input type="date" name="expiration_date" class="form-control" id="recipient-name"
+                      value="<?= isset($_POST['expiration_date']) ? $_POST['expiration_date'] : '' ?>">
                   </div>
                 </div>
               </div>

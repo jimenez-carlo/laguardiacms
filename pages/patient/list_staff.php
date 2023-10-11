@@ -11,11 +11,14 @@ $list_del_msg = "Staff Deleted Successfully!";
 $list_enable_actions = true;
 $list_actions = [
   "view" => "view_user.php?type=staff&",
-  "edit" => false,
-  "delete" => false
+  "edit" => "edit_user.php?type=staff&",
+  "delete" => true
 ];
 $_SESSION['back_url'] = "list_staff.php";
 ?>
+<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-user-plus"></i> Add Staff</button>
+<br> <br>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <?php

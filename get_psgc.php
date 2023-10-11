@@ -18,7 +18,7 @@ if (!empty($_GET)) {
   $query_run = mysqli_query($conn, $query);
   if (mysqli_num_rows($query_run) > 0) {
     foreach ($query_run as $res) {
-      echo '<option value="' . $res['id'] . '" ' . ((isset($default) && $default == $res['id']) ? 'selected' : '') . '>' . $res['name'] . '</option>';
+      echo '<option value="' . $res['id'] . '" ' . ((isset($default) && $default == $res['id']) ? 'selected' : '') . ' zip="'.(($table =='tbl_city') ? $res['zip_code'] : 0).'">' . $res['name'] . '</option>';
     }
   }
 }

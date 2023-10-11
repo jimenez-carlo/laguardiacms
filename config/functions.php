@@ -31,7 +31,32 @@ function get_one($sql)
 
 function get_all($sql)
 {
-  return query($sql);
+  $data = [];
+  foreach (query($sql) as $res) {
+    $data[] = $res;
+  }
+  return $data;
+}
+
+function get_fields($sql){
+  $fields = [];
+ foreach (mysqli_fetch_fields(query($sql)) as $res) {
+    $fields[] = $res->name;
+ }
+  return $fields;
+}
+
+function field_replacer($value, $sql, $array){
+  $replace = [];
+  foreach (get_fields($sql) as $res) {
+    $replace[':'.$res] = $array[$res]; 
+  }
+
+  return strtr($value, $replace);
+}
+
+function format_date($date){
+  return date_format($date,"F d, Y");
 }
 
 function upload($file, $delete_file = "", $path = "../../files/")
@@ -88,9 +113,9 @@ function update_user()
   extract(array_merge($_POST, $_FILES));
 
 
-  if (check_username($uname, $id)) {
-    return error("Username Already In-Use!");
-  }
+  // if (check_username($uname, $id)) {
+  //   return error("Username Already In-Use!");
+  // }
 
   if (check_email($eml, $id)) {
     return error("Email Already In-Use!");
@@ -99,7 +124,7 @@ function update_user()
   if (isset($image)) {
     $pic = upload($image);
   }
-  query("UPDATE $table set fname = '$fname', mname = '$mname', lname = '$lname', cn = '$cn', house_no = '$house_no', province_id =  '$province_id', city_id =  '$city_id', barangay_id = '$barangay_id', zip_code = '$zip_code', email = '$eml', uname = '$uname', password = '$pass', pic = '$pic' where id = $id");
+  query("UPDATE $table set fname = '$fname', mname = '$mname', lname = '$lname', cn = '$cn', house_no = '$house_no', province_id =  '$province_id', city_id =  '$city_id', barangay_id = '$barangay_id', zip_code = '$zip_code', email = '$eml', password = '$pass', pic = '$pic' where id = $id");
   unset($_POST);
   return success(ucfirst($table)." Updated Successfully!");
 }
@@ -273,12 +298,14 @@ function check_email($email, $id = null)
 
 function success($message = "Action Is Successfully!")
 {
-  return '<div id="Hide" class="alert alert-success alert-dismissible fade show" role="alert">' . $message . '</div>';
+  return "<script>alert('$message');</script>";
+  // return '<div id="Hide" class="alert alert-success alert-dismissible fade show" role="alert">' . $message . '</div>';
 }
 
 function error($message = "Error Something Went Wrong!")
 {
-  return '<div id="Hide" class="alert alert-danger alert-dismissible fade show" role="alert">' . $message . '</div>';
+  return "<script>alert('$message');</script>";
+  // return '<div id="Hide" class="alert alert-danger alert-dismissible fade show" role="alert">' . $message . '</div>';
 }
 
 

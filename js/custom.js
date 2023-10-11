@@ -15,14 +15,17 @@ window.onload = function () {
     if (typeof(province_dropdown) != 'undefined' && province_dropdown != null) {
       let city_dropdown = document.getElementById('city_id');
       let barangay_dropdown = document.getElementById('barangay_id');
+      let zip_code = document.querySelector('input[name="zip_code"]');
 
       province_dropdown.addEventListener('change', function () {
         get_psgc(city_dropdown, "province_id", province_dropdown.value);
         get_psgc(barangay_dropdown, "city_id", city_dropdown.value);
+        zip_code.value = city_dropdown.options[city_dropdown.selectedIndex].getAttribute('zip');
       });
 
       city_dropdown.addEventListener('change', function () {
         get_psgc(barangay_dropdown, "city_id", city_dropdown.value);
+        zip_code.value = city_dropdown.options[city_dropdown.selectedIndex].getAttribute('zip');
       });
 
 
@@ -50,6 +53,7 @@ window.onload = function () {
   }
   
 }
+
     function get_psgc(element, target, value) {
       return fetch("../../get_psgc.php?" + target + "=" + value).then(response => {
         if (!response.ok) {

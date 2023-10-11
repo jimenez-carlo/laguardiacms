@@ -30,7 +30,7 @@ $equipment = get_one("select * from tbl_equipment where id = $id");
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Name:</label>
+                                                <label>*Name:</label>
                                                 <input type="text" name="name" class="form-control text-uppercase" value="<?= $equipment->name ?>" disabled>
                                             </div>
                                         </div>
@@ -38,19 +38,19 @@ $equipment = get_one("select * from tbl_equipment where id = $id");
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Description:</label>
+                                                <label>*Description:</label>
                                                 <textarea name="description" class="form-control" id="" cols="3" rows="3" disabled><?= $equipment->description ?></textarea>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Price:</label>
+                                                <label>*Price:</label>
                                                 <input type="number" name="price" class="form-control text-uppercase" value="<?= $equipment->price ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Stock:</label>
+                                                <label>*Stock:</label>
                                                 <input type="number" name="price" class="form-control text-uppercase" value="<?= $equipment->stock ?>" disabled>
                                             </div>
                                         </div>

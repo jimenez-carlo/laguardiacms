@@ -16,6 +16,7 @@ $list_actions = [
 ];
 $_SESSION['back_url'] = "list_medicine.php";
 ?>
+<br> <br>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">

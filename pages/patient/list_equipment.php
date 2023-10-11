@@ -16,7 +16,7 @@ $list_actions = [
 ];
 $_SESSION['back_url'] = "list_equipment.php";
 ?>
-
+<br> <br>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">

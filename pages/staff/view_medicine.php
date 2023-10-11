@@ -29,7 +29,7 @@ $medicine = get_one("select m.*,sum(ifnull(ms.stock,0)) as stock from tbl_medici
                                     <div class="col-md-12">
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Type:</label>
+                                                <label>*Type:</label>
                                                 <select name="type" id="type" class="form-control" disabled>
                                                     <option value="Tablet" <?= $medicine->type == 'Tablet' ? 'selected' : '' ?>>Tablet</option>
                                                     <option value="Capsule" <?= $medicine->type == 'Capsule' ? 'selected' : '' ?>>Capsule</option>
@@ -40,7 +40,7 @@ $medicine = get_one("select m.*,sum(ifnull(ms.stock,0)) as stock from tbl_medici
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Name:</label>
+                                                <label>*Name:</label>
                                                 <input type="text" name="name" class="form-control text-uppercase" value="<?= $medicine->name ?>" disabled>
                                             </div>
                                         </div>
@@ -48,19 +48,19 @@ $medicine = get_one("select m.*,sum(ifnull(ms.stock,0)) as stock from tbl_medici
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Description:</label>
+                                                <label>*Description:</label>
                                                 <textarea name="description" class="form-control" id="" cols="3" rows="3" disabled><?= $medicine->description ?></textarea>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Price:</label>
+                                                <label>*Price:</label>
                                                 <input type="number" name="price" class="form-control text-uppercase" value="<?= $medicine->price ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Stock:</label>
+                                                <label>*Stock:</label>
                                                 <input type="number" name="price" class="form-control text-uppercase" value="<?= $medicine->stock ?>" disabled>
                                             </div>
                                         </div>

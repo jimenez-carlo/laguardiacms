@@ -30,7 +30,7 @@ $service = get_one("select * from tbl_services where id = $id");
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Name:</label>
+                                                <label>*Name:</label>
                                                 <input type="text" name="name" class="form-control text-uppercase" value="<?= $service->name ?>" disabled>
                                             </div>
                                         </div>
@@ -38,13 +38,13 @@ $service = get_one("select * from tbl_services where id = $id");
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Description:</label>
+                                                <label>*Description:</label>
                                                 <textarea name="description" class="form-control" id="" cols="3" rows="3" disabled><?= $service->description ?></textarea>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <label>Price:</label>
+                                                <label>*Price:</label>
                                                 <input type="number" name="price" class="form-control text-uppercase" value="<?= $service->price ?>" disabled>
                                             </div>
                                         </div>
