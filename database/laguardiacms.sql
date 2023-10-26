@@ -116,7 +116,7 @@ CREATE TABLE `doctor` (
 
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES (9,'Rhenalyn Junio','09307980400','Korea','rhenalynjunio0830@gmail.com','Rheyna','Love_022521',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.png'),(11,'doctor','99999999','','admin123@gmail.com','doctor','doctor123','doctor','doctor','1035','103512','103512001','2423','2423','img_10032023121641.jpg');
+INSERT INTO `doctor` VALUES (9,'Rhenalyn Junio','09307980400','Korea','rhenalynjunio0830@gmail.com','Rheyna','Love_022521',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.png'),(11,'doctor','99999999','','doctor@gmail.com','doctor','doctor123','doctor','doctor','1035','103512','103512001','2423','2423','img_10032023121641.jpg');
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +214,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES (4,'frederick villa','21','09516895890','Male','Single',' Diaz, Bautista, Pangasinan','patient','frederickvilla001@gmail.com','patient123',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.png','2023-10-03 17:35:26'),(7,'Rhenalyn Junio','20','09516895890','Female','Single',' Korea','Kikay','rhenalynjunio08302@gmail.com','Love_022521','test','test','1401','140115','140115001','123213','2820','img_10102023220948.','2023-10-03 17:35:26');
+INSERT INTO `patient` VALUES (4,'frederick villa','21','09516895890','Male','Single',' Diaz, Bautista, Pangasinan','patient','frederickvilla001@gmail.com','patient123',NULL,NULL,'1401','140115','140115001','123213','2820','default.png','2023-10-03 17:35:26'),(7,'Rhenalyn Junio','20','09516895890','Female','Single',' Korea','Kikay','rhenalynjunio08302@gmail.com','Love_022521','test','test','1401','140115','140115001','123213','2820','img_10102023220948.','2023-10-03 17:35:26');
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -661,4 +661,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-11 13:35:09
+-- Dump completed on 2023-10-26 11:16:50
