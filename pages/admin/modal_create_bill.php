@@ -98,7 +98,6 @@
     </div>
   </div>
 </div>
-</div>
 <script>
 let amount = document.getElementById('amount');
 amount.addEventListener('change', function(e) {

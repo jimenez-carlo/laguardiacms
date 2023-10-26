@@ -241,7 +241,10 @@ include_once('modal_create_bill.php');
         <div class="d-flex">
           <input type="submit" name="update_appointment" class="btn btn-primary" value="Update"
             <?= in_array($appointment->status,['rejected','closed','completed']) ? 'disabled' : '' ?>>
-          <button type="button" class="btn btn-primary" style="margin-left:5px"> Print</button>
+          <a type="button" class="btn btn-primary" style="margin-left:5px" target="_blank"
+            href="../../generate.php?type=medical_cert&id=<?= $id?>"> Medical Certificate</a>
+          <a type="button" class="btn btn-primary" style="margin-left:5px" target="_blank"
+            href="../../generate.php?type=diagnostic&id=<?= $id?>"> Medicine Diagnostic</a>
           <button type="button" class="btn btn-primary" style="margin-left:5px" data-toggle="modal"
             data-target="#createBillModal"> Pay</button>
           <a style="margin-left:5px" href="list_appointment.php" type="button" class="btn btn-primary">Back</a>
