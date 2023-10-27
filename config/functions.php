@@ -145,6 +145,8 @@ function create_appointment(){
 function update_appointment(){
   extract($_POST);
   query("UPDATE tbl_appointment set patient_id = '$patient_id', doctor_id = '$doctor_id', appointment_date = '$appointment_date', remarks = '$remarks' where id = $id ");
+// echo '<pre>';
+// print_r($_POST);die;
   if(!empty($sservice)){
     query("DELETE from tbl_appointment_services where appointment_id = $id ");
     foreach ($sservice as $i => $result) {

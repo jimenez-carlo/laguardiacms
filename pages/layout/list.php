@@ -47,6 +47,7 @@
                   href="<?= field_replacer($list_actions['edit'], $list_sql, $row) ?>&id=<?= $row['id']; ?>"
                   class="btn btn-primary" style="margin-right:.25rem">Edit</a><?php } ?>
                 <?php if ($list_actions['delete']) { ?>
+                <?php $table = ($table == 'User') ? ':access' : $table  ?>
                 <form method="post">
                   <input type="hidden" name="table" value="<?= field_replacer($table, $list_sql, $row) ?>">
                   <button type="submit" name="delete" value="<?= $row['id']; ?>" class="btn btn-danger">Delete</a>

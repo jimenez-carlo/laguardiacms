@@ -18,7 +18,7 @@ $list_enable_actions = true;
 $list_actions = [
   "view" => "view_user.php?type=:access&",
   "edit" => "edit_user.php?type=:access&",
-  "delete" => true
+  "delete" => ":access"
 ];
 $_SESSION['back_url'] = "list_users.php";
 ?>

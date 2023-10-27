@@ -13,7 +13,6 @@ include_once('../layout/header.php');
 
 extract($_GET);
 $appointment = get_one("select * from tbl_appointment where id = $id");
-include_once('modal_create_bill.php');
  ?>
         <h6 class="m-0 font-weight-bold text-primary">
           Appointment ID: <?= $id ?>
@@ -197,7 +196,8 @@ include_once('modal_create_bill.php');
                       <?php } ?>
                       <tr>
                         <td colspan="5"><button type="button" class="btn btn-primary"
-                            id="btn_add_equipment">Add</button></td>
+                            id="btn_add_equipment">Add</button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -250,6 +250,7 @@ include_once('modal_create_bill.php');
           <a style="margin-left:5px" href="list_appointment.php" type="button" class="btn btn-primary">Back</a>
         </div>
   </form>
+  <?php  include_once('modal_create_bill.php'); ?>
   <?php 
                 $service_options = '';
                 $service_array = [];
@@ -284,7 +285,7 @@ include_once('modal_create_bill.php');
     let index = xTable.rows.length - 1;
     let tr = xTable.insertRow(index);
     tr.innerHTML =
-      "<td><input type='text' name='sresult[]' class='form-control text-uppercase'></td> <td><select name='sservice[]' class='form-control'><?= $service_options ?></select></td> <td><input data-calc type='number' name='sqty[]' class='form-control' value='1'></td> </td><td style='text-align: right;'><?= reset($service_array)?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
+      "<td><input type='text' name='sresult[]' class='form-control text-uppercase'></td> <td><select name='sservice[]' class='form-control'><?= $service_options ?></select></td> <td><input type='number' name='sqty[]' class='form-control' value='1'></td> </td><td style='text-align: right;'><?= reset($service_array)?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
   });
 
   let btn_add_medicine = document.getElementById("btn_add_medicine");
@@ -293,7 +294,7 @@ include_once('modal_create_bill.php');
     let index = xTable.rows.length - 1;
     let tr = xTable.insertRow(index);
     tr.innerHTML =
-      "<td><select name='mmedicine[]' class='form-control'><?= $medicine_options ?></select></td> <td><input data-calc type='number' name='mqty[]' class='form-control' value = '1'></td> </td><td style='text-align: right;' ><?= reset($medicine_array)?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
+      "<td><select name='mmedicine[]' class='form-control'><?= $medicine_options ?></select></td> <td><input type='number' name='mqty[]' class='form-control' value = '1'></td> </td><td style='text-align: right;' ><?= reset($medicine_array)?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
   });
 
   let btn_add_equipment = document.getElementById("btn_add_equipment");
@@ -302,7 +303,7 @@ include_once('modal_create_bill.php');
     let index = xTable.rows.length - 1;
     let tr = xTable.insertRow(index);
     tr.innerHTML =
-      "<td><input type='text' name='eresult[]' class='form-control text-uppercase'></td> <td><select name='eequipment[]' class='form-control'><?= $equipment_options ?></select></td> <td><input data-calc type='number' name='eqty[]' class='form-control' value = '1'></td> </td><td style='text-align: right;' ><?= reset($equipment_array)?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
+      "<td><input type='text' name='eresult[]' class='form-control text-uppercase'></td> <td><select name='eequipment[]' class='form-control'><?= $equipment_options ?></select></td> <td><input type='number' name='eqty[]' class='form-control' value = '1'></td> </td><td style='text-align: right;' ><?= reset($equipment_array)?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
   });
 
   const table_service = document.getElementById('tbl_service');
@@ -317,8 +318,7 @@ include_once('modal_create_bill.php');
   table_medicine.addEventListener('change', update_medicine_price);
 
   function update_service_price(ev) {
-    if ((ev.target.tagName == 'INPUT' && ev.target.type == 'number' && ev.target.hasAttribute('data-calc')) || ev.target
-      .tagName == 'SELECT') {
+    if ((ev.target.tagName == 'INPUT' && ev.target.type == 'number') || ev.target.tagName == 'SELECT') {
       if (ev.target.parentElement.parentElement.children[2].children[0].value == 0 || ev.target.parentElement
         .parentElement.children[2].children[0].value == '') {
         ev.target.parentElement.parentElement.children[3].innerHTML = '0.00';
@@ -337,8 +337,7 @@ include_once('modal_create_bill.php');
   }
 
   function update_equipment_price(ev) {
-    if ((ev.target.tagName == 'INPUT' && ev.target.type == 'number' && ev.target.hasAttribute('data-calc')) || ev.target
-      .tagName == 'SELECT') {
+    if ((ev.target.tagName == 'INPUT' && ev.target.type == 'number') || ev.target.tagName == 'SELECT') {
       if (ev.target.parentElement.parentElement.children[2].children[0].value == 0 || ev.target.parentElement
         .parentElement.children[2].children[0].value == '') {
         ev.target.parentElement.parentElement.children[3].innerHTML = '0.00';
@@ -357,8 +356,7 @@ include_once('modal_create_bill.php');
   }
 
   function update_medicine_price(ev) {
-    if ((ev.target.tagName == 'INPUT' && ev.target.type == 'number' && ev.target.hasAttribute('data-calc')) || ev.target
-      .tagName == 'SELECT') {
+    if ((ev.target.tagName == 'INPUT' && ev.target.type == 'number') || ev.target.tagName == 'SELECT') {
       if (ev.target.parentElement.parentElement.children[1].children[0].value == 0 || ev.target.parentElement
         .parentElement.children[1].children[0].value == '') {
         ev.target.parentElement.parentElement.children[2].innerHTML = '0.00';
