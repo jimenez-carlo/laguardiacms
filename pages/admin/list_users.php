@@ -7,9 +7,9 @@ $list_title = "User List";
 $list_header = ["Access", "Full's Name", "Email", "Contact Number"];
 $list_column = ["access", "fullname", "email", "cn"];
 $list_sql = "SELECT x.* from (
-select a.*,1 as access_id,'admin' as access, concat(a.fname,' ', a.mname, ' ',a.lname ) as fullname,concat('+63',a.cn) as contact FROM admin a union 
-select d.*,2 as access_id,'doctor' as access, concat(d.fname,' ', d.mname, ' ',d.lname ) as fullname,concat('+63',d.cn) as contact from doctor d union 
-select s.*,4 as access_id,'staff' as access, concat(s.fname,' ', s.mname, ' ',s.lname ) as fullname,concat('+63',s.cn) as contact from staff s union 
+select a.*,1 as access_id,'admin' as access,  concat(IFNULL(a.fname, ''),' ', IFNULL(a.mname,''), ' ',IFNULL(a.lname,'') ) as fullname,concat('+63',a.cn) as contact FROM admin a union 
+select d.*,2 as access_id,'doctor' as access, concat(IFNULL(d.fname, ''),' ', IFNULL(d.mname,''), ' ',IFNULL(d.lname,'') ) as fullname,concat('+63',d.cn) as contact from doctor d union 
+select s.*,4 as access_id,'staff' as access,  concat(IFNULL(s.fname, ''),' ', IFNULL(s.mname,''), ' ',IFNULL(s.lname,'') ) as fullname,concat('+63',s.cn) as contact from staff s union 
 select p.id,p.fname,p.cn,p.addrss,p.email,p.uname,p.password,p.mname,p.lname,p.province_id,p.city_id,p.barangay_id,p.house_no,p.zip_code,p.pic,3 as access_id,'patient' as access, 
 concat(p.fname,' ', p.mname, ' ',p.lname ) as fullname,concat('+63',p.cn) as contact
  from patient p) x";

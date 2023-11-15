@@ -133,6 +133,7 @@ include_once('../layout/header.php');
                   <input type="file" name="image" class="" id="image" accept="image/*">
                 </div>
               </div>
+              <input type="hidden" name="old_type" value="<?= $type ?>">
               <div class="form-row">
                 <?php if($type != 'patient'){ ?>
                 <div class="form-group col-md-12">

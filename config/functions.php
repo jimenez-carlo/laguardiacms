@@ -61,7 +61,7 @@ function format_date($date){
 
 function upload($file, $delete_file = "", $path = "../../files/")
 {
-  if (!empty($delete_file)) delete_file($delete_file);
+  // if (!empty($delete_file)) delete_file($delete_file);
 
   $name = $file['name'];
   $name = (explode(".", $name));
@@ -90,9 +90,9 @@ function create_user()
   extract(array_merge($_POST, $_FILES));
 
 
-  if (check_username($uname)) {
-    return error("Username Already In-Use!");
-  }
+  // if (check_username($uname)) {
+    // return error("Username Already In-Use!");
+  // }
 
   if (check_email($eml)) {
     return error("Email Already In-Use!");
@@ -102,8 +102,8 @@ function create_user()
   if (isset($image)) {
     $pic = upload($image);
   }
-  query("INSERT INTO $table (fname, mname, lname, cn, house_no, province_id, city_id, barangay_id, zip_code, email, uname, password, pic) 
-                     VALUES ('$fname', '$mname', '$lname', '$cn', '$house_no', '$province_id', '$city_id', '$barangay_id', '$zip_code', '$eml', '$uname', '$pass', '$pic')");
+  query("INSERT INTO $table (fname, mname, lname, cn, house_no, province_id, city_id, barangay_id, zip_code, email, password, pic) 
+                     VALUES ('$fname', '$mname', '$lname', '$cn', '$house_no', '$province_id', '$city_id', '$barangay_id', '$zip_code', '$eml', '$pass', '$pic')");
   unset($_POST);
   return success("User Created Successfully!");
 }
@@ -120,13 +120,27 @@ function update_user()
   if (check_email($eml, $id)) {
     return error("Email Already In-Use!");
   }
-  $pic = get_one("select pic from $table where id = $id")->pic;
-  if (isset($image)) {
+  
+  $pic = get_one("select pic from ".($old_type ? $old_type : $table)." where id = $id")->pic ?? "default.png";
+  if (!empty($image['name'])) {
     $pic = upload($image);
   }
-  query("UPDATE $table set fname = '$fname', mname = '$mname', lname = '$lname', cn = '$cn', house_no = '$house_no', province_id =  '$province_id', city_id =  '$city_id', barangay_id = '$barangay_id', zip_code = '$zip_code', email = '$eml', password = '$pass', pic = '$pic' where id = $id");
-  unset($_POST);
-  return success(ucfirst($table)." Updated Successfully!");
+//   echo '<pre>';
+// echo "delete from $table where id = $id";
+// print_r($pic);die;
+  if(isset($old_type) && $old_type != $table){
+    query("delete from $old_type where id = $id");
+    $new_id = get_insert_id("INSERT INTO $table (fname,mname,lname,cn,house_no,province_id, city_id,barangay_id, zip_code, email, password, pic) VALUES(
+      '$fname','$mname','$lname','$cn','$house_no','$province_id','$city_id','$barangay_id','$zip_code', '$eml','$pass', '$pic'
+    )");
+return '<script> alert("'.ucfirst($table).' Updated Successfully!"); window.location.href = window.location.href+"&type='.$table.'&id='.$new_id.'"; </script>';
+    unset($_POST);
+
+  }else{
+    query("UPDATE $table set fname = '$fname', mname = '$mname', lname = '$lname', cn = '$cn', house_no = '$house_no', province_id =  '$province_id', city_id =  '$city_id', barangay_id = '$barangay_id', zip_code = '$zip_code', email = '$eml', password = '$pass', pic = '$pic' where id = $id");
+    return success(ucfirst($table)." Updated Successfully!");
+    unset($_POST);
+  }
 }
 
 function insert_appointment_history($id, $status = 'pending', $remarks = null){
@@ -145,8 +159,6 @@ function create_appointment(){
 function update_appointment(){
   extract($_POST);
   query("UPDATE tbl_appointment set patient_id = '$patient_id', doctor_id = '$doctor_id', appointment_date = '$appointment_date', remarks = '$remarks' where id = $id ");
-// echo '<pre>';
-// print_r($_POST);die;
   if(!empty($sservice)){
     query("DELETE from tbl_appointment_services where appointment_id = $id ");
     foreach ($sservice as $i => $result) {
