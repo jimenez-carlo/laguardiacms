@@ -12,14 +12,7 @@
         <form method="post" enctype="multipart/form-data">
           <div class="container">
             <div class="row">
-              <div class="col-md-12">
-                <?php
-                if (isset($_POST['create_appointment'])) {
-                  echo "<script > $('#exampleModal').modal('show'); </script>";
-                  echo create_appointment();
-                }
-                ?>
-              </div>
+
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -48,6 +41,7 @@
                       value="<?= isset($_POST['appointment_date']) ? $_POST['appointment_date'] : date('Y-m-d') ?>">
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

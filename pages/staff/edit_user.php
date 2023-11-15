@@ -133,6 +133,7 @@ include_once('../layout/header.php');
                   <input type="file" name="image" class="" id="image" accept="image/*">
                 </div>
               </div>
+              <input type="hidden" name="old_type" value="<?= $type ?>">
               <div class="form-row">
                 <?php if($type != 'patient'){ ?>
                 <div class="form-group col-md-12">
@@ -182,7 +183,7 @@ include_once('../layout/header.php');
 
           <!-- <button type="submit" name="updatebtn" style="display:inline-block;" class="btn btn-primary">View</button> -->
           <div class="d-flex">
-            <input type="submit" name="update_user" class="btn btn-primary" value="Update">
+            <input type="submit" name="update_user" class="btn btn-success" value="Update">
             <a style="margin-left:5px" href="<?= $_SESSION['back_url'] ?>" type="button"
               class="btn btn-primary">Back</a>
           </div>

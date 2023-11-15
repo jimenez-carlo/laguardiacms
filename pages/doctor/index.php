@@ -36,11 +36,11 @@ include_once('../layout/header.php');
 
                 <?php
 
-                                $query = "SELECT id FROM doctor ORDER BY id";
-                                $query_run = mysqli_query($conn, $query);
-                                $row = mysqli_num_rows($query_run);
-                                echo '<h4>' . $row . '</h4>';
-                                ?>
+                $query = "SELECT id FROM doctor ORDER BY id";
+                $query_run = mysqli_query($conn, $query);
+                $row = mysqli_num_rows($query_run);
+                echo '<h4>' . $row . '</h4>';
+                ?>
 
               </div>
             </div>
@@ -62,11 +62,11 @@ include_once('../layout/header.php');
                 Total Staff</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
                 <?php
-                                $query = "SELECT id FROM staff ORDER BY id";
-                                $query_run = mysqli_query($conn, $query);
-                                $row = mysqli_num_rows($query_run);
-                                echo '<h4>' . $row . '</h4>';
-                                ?>
+                $query = "SELECT id FROM staff ORDER BY id";
+                $query_run = mysqli_query($conn, $query);
+                $row = mysqli_num_rows($query_run);
+                echo '<h4>' . $row . '</h4>';
+                ?>
 
               </div>
             </div>
@@ -88,11 +88,11 @@ include_once('../layout/header.php');
                 Total Patients</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
                 <?php
-                                $query = "SELECT id FROM patient ORDER BY id";
-                                $query_run = mysqli_query($conn, $query);
-                                $row = mysqli_num_rows($query_run);
-                                echo '<h4>' . $row . '</h4>';
-                                ?>
+                $query = "SELECT id FROM patient ORDER BY id";
+                $query_run = mysqli_query($conn, $query);
+                $row = mysqli_num_rows($query_run);
+                echo '<h4>' . $row . '</h4>';
+                ?>
               </div>
             </div>
             <div class="col-auto">
@@ -113,11 +113,11 @@ include_once('../layout/header.php');
                 Total Medicines</div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
                 <?php
-                                $query = "SELECT id FROM medicine ORDER BY id";
-                                $query_run = mysqli_query($conn, $query);
-                                $row = mysqli_num_rows($query_run);
-                                echo '<h4>' . $row . '</h4>';
-                                ?>
+                $query = "SELECT id FROM medicine ORDER BY id";
+                $query_run = mysqli_query($conn, $query);
+                $row = mysqli_num_rows($query_run);
+                echo '<h4>' . $row . '</h4>';
+                ?>
               </div>
             </div>
             <div class="col-auto">
@@ -128,9 +128,9 @@ include_once('../layout/header.php');
       </div>
     </div>
   </div>
-  <?php 
-$tmp = [];
-foreach (get_all("select UPPER(CONCAT(a.status,' - ' ,IFNULL(p.fname,''),' ',IFNULL(p.mname, ''),' ',IFNULL(p.lname,''))) as title,a.appointment_date as start,concat('edit_appointment.php?id=',a.id) as url,
+  <?php
+  $tmp = [];
+  foreach (get_all("select UPPER(CONCAT(a.status,' - ' ,IFNULL(p.fname,''),' ',IFNULL(p.mname, ''),' ',IFNULL(p.lname,''))) as title,a.appointment_date as start,concat('edit_appointment.php?id=',a.id) as url,
 case
     when a.status = 'pending' then 'yellow'
     when a.status = 'approved' then 'green'
@@ -141,14 +141,14 @@ case
 
 end    
 as backgroundColor,
-if(a.status = 'pending', 'black', 'white')as textColor  from tbl_appointment a left join patient p on p.id = a.patient_id where a.doctor_id = ".$_SESSION['user']->id."") as $res) {
+if(a.status = 'pending', 'black', 'white')as textColor  from tbl_appointment a left join patient p on p.id = a.patient_id where a.doctor_id = " . $_SESSION['user']->id . "") as $res) {
     $tmp[] = $res;
-};
- ?>
+  };
+  ?>
   <script>
-  var public_events = <?php echo json_encode($tmp)?>;
+    var public_events = <?php echo json_encode($tmp) ?>;
   </script>
   <div id="calendar"></div>
   <?php
-    include_once('../layout/footer.php');
-    ?>
+  include_once('../layout/footer.php');
+  ?>

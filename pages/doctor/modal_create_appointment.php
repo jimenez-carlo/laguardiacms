@@ -15,7 +15,7 @@
               <div class="col-md-12">
                 <?php
                 if (isset($_POST['create_appointment'])) {
-                  echo "<script > $('#exampleModal').modal('show'); </script>";
+                  // echo "<script > $('#exampleModal').modal('show'); </script>";
                   echo create_appointment();
                 }
                 ?>
@@ -26,7 +26,7 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Patient:</label>
+                    <label for="recipient-name" class="col-form-label">*Patient:</label>
                     <select name="patient_id" id="patient_id" class="select2 form-control" required style="width:100%">
                       <?php foreach (mysqli_query($conn, "SELECT * from patient") as $row) { ?>
                       <option value="<?= $row['id'] ?>"
@@ -39,7 +39,7 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Doctor:</label>
+                    <label for="recipient-name" class="col-form-label">*Doctor:</label>
                     <select name="doctor_id" id="doctor_id" class="select2 form-control" required style="width:100%">
                       <?php foreach (mysqli_query($conn, "SELECT * from doctor") as $row) { ?>
                       <option value="<?= $row['id'] ?>"
@@ -54,7 +54,7 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">Appointment Date:</label>
+                    <label for="recipient-name" class="col-form-label">*Appointment Date:</label>
                     <input type="date" name="appointment_date" class="form-control" id="recipient-name" required
                       value="<?= isset($_POST['appointment_date']) ? $_POST['appointment_date'] : date('Y-m-d') ?>">
                   </div>

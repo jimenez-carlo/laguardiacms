@@ -3,7 +3,7 @@
 
 </div>
 <!-- End of Main Content -->
-<footer class="sticky-footer">
+<!-- <footer class="sticky-footer">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
             <span>Copyright &copy; <script>
@@ -11,7 +11,7 @@
                 </script> Capstone Project</span>
         </div>
     </div>
-</footer>
+</footer> -->
 <!-- End of Footer -->
 
 

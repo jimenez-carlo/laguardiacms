@@ -11,9 +11,9 @@ include_once('../layout/header.php');
         <?= isset($_POST['update_appointment']) ?  update_appointment() : '' ?>
         <?php
 
-extract($_GET);
-$appointment = get_one("select * from tbl_appointment where id = $id");
- ?>
+        extract($_GET);
+        $appointment = get_one("select * from tbl_appointment where id = $id");
+        ?>
         <h6 class="m-0 font-weight-bold text-primary">
           Appointment ID: <?= $id ?>
           <input type="hidden" name="id" value="<?= $id ?>">
@@ -21,7 +21,7 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
           <div class="d-flex float-right" style="width:fit-content">
             <div class="input-group mb-2">
               <div class="input-group-prepend">
-                <button type="button" class="form-control btn btn-primary" disabled> Change Status</button>
+                <button type="submit" class="form-control btn btn-primary" disabled <?= in_array($appointment->status, ['rejected', 'closed', 'completed']) ? 'disabled' : '' ?> name="change_status"> Change Status</button>
               </div>
               <select name="status" id="status" class="form-control float-right" style="width:fit-content" disabled>
                 <option value="pending" <?= $appointment->status == 'pending' ? 'selected' : '' ?>>PENDING</option>
@@ -48,8 +48,8 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
                 <label>*Patient:</label>
                 <select name="patient_id" id="patient_id" class="form-control" disabled>
                   <?php foreach (mysqli_query($conn, "SELECT * from patient") as $row) { ?>
-                  <option value="<?= $row['id'] ?>" <?= $appointment->patient_id == $row['id'] ? 'selected' : '' ?>>
-                    <?= strtoupper($row['fname'].' '.$row['mname'].' '.$row['lname']) ?></option>
+                    <option value="<?= $row['id'] ?>" <?= $appointment->patient_id == $row['id'] ? 'selected' : '' ?>>
+                      <?= strtoupper($row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']) ?></option>
                   <?php } ?>
                 </select>
               </div>
@@ -57,32 +57,44 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
                 <label>*Doctor:</label>
                 <select name="doctor_id" id="doctor_id" class="form-control" disabled>
                   <?php foreach (mysqli_query($conn, "SELECT * from doctor") as $row) { ?>
-                  <option value="<?= $row['id'] ?>" <?= $appointment->doctor_id == $row['id'] ? 'selected' : '' ?>>
-                    <?= strtoupper($row['fname'].' '.$row['mname'].' '.$row['lname']) ?></option>
+                    <option value="<?= $row['id'] ?>" <?= $appointment->doctor_id == $row['id'] ? 'selected' : '' ?>>
+                      <?= strtoupper($row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']) ?></option>
                   <?php } ?>
                 </select>
               </div>
               <div class="form-group col-md-4">
                 <label>*Appointment Date:</label>
-                <input type="date" name="appointment_date" value="<?= $appointment->appointment_date ?>"
-                  class="form-control" id="recipient-name" disabled>
+                <input type="date" name="appointment_date" disabled value="<?= $appointment->appointment_date ?>" class="form-control" id="recipient-name">
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group col-md-12">
                 <label>*Remarks:</label>
-                <textarea name="remarks" class="form-control" id="" cols="3" rows="3"
-                  disabled><?= $appointment->remarks ?></textarea>
+                <textarea name="remarks" disabled class="form-control" id="" cols="3" rows="3"><?= $appointment->remarks ?></textarea>
               </div>
             </div>
 
           </div>
-
         </div>
 
-        <div class="row">
-          <div class="col-md-6">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="pills-services-tab" data-toggle="pill" href="#pills-services" role="tab" aria-controls="pills-services" aria-selected="true">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-medicine-tab" data-toggle="pill" href="#pills-medicine" role="tab" aria-controls="pills-medicine" aria-selected="false">Medicine</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-lab-tab" data-toggle="pill" href="#pills-lab" role="tab" aria-controls="pills-lab" aria-selected="false">Lab/Equipment</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-history-tab" data-toggle="pill" href="#pills-history" role="tab" aria-controls="pills-history" aria-selected="false">Status History</a>
+          </li>
+        </ul>
+        
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-services" role="tabpanel" aria-labelledby="pills-services-tab">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Services</h6>
@@ -101,21 +113,25 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
 
                     <tbody>
                       <?php foreach (get_all("select s.*,ss.price,ss.name from tbl_appointment_services s inner join tbl_services ss on ss.id = s.service_id where s.appointment_id = $id") as $row) { ?>
-                      <tr>
-                        <td class="text-uppercase"><?= strtoupper($row['result']??'')?></td>
-                        <td><?= dynamic_dropdown('tbl_services', 'sservice[]', $row['service_id'], true) ?></td>
-                        <td style="text-align: right;" class="text-uppercase"><?= $row['qty']??0 ?></td>
-                        <td style="text-align: right;"><?= number_format($row['price'] *( $row['qty']??0),2) ?></td>
-                      </tr>
+                        <tr>
+                          <td><input disabled type="text" name="sresult[]" value="<?= strtoupper($row['result'] ?? '') ?>" class="form-control text-uppercase"></td>
+                          <td> <?= dynamic_dropdown('tbl_services', 'sservice[]', $row['service_id'],true ) ?></td>
+                          <td><input disabled type="number" data-calc name="sqty[]" value="<?= $row['qty'] ?? 0 ?>" class="form-control"></td>
+                          <td style="text-align: right;"><?= number_format($row['price'] * ($row['qty'] ?? 0), 2) ?></td>
+                          <!-- <td> <button type="button" class="btn btn-primary btn-remove">Remove</button></td> -->
+                        </tr>
                       <?php } ?>
-
+                      <tr>
+                        <!-- <td colspan="5"><button type="button" class="btn btn-primary" id="btn_add_service">Add</button>
+                        </td> -->
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="tab-pane fade" id="pills-medicine" role="tabpanel" aria-labelledby="pills-medicine-tab">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Medicine</h6>
@@ -133,23 +149,24 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
 
                     <tbody>
                       <?php foreach (get_all("select s.*,m.price,m.name from tbl_appointment_medicine s inner join tbl_medicine_stock ms on ms.id = s.medicine_stock_id inner join tbl_medicine m on m.id = ms.medicine_id where s.appointment_id = $id order by m.id asc") as $row) { ?>
-                      <tr>
-                        <td><?= medicine_dropdown( 'mmedicine[]', $row['id'] ,true) ?></td>
-                        <td style="text-align: right;" class="text-uppercase"><?= $row['qty']??0 ?></td>
-                        <td style="text-align: right;"><?= number_format($row['price'] *( $row['qty']??0),2) ?></td>
-                      </tr>
+                        <tr>
+                          <td><?= medicine_dropdown('mmedicine[]', $row['id'],true) ?></td>
+                          <td><input disabled type="number" data-calc name="mqty[]" value="<?= $row['qty'] ?? 0 ?>" class="form-control"></td>
+                          <td style="text-align: right;"><?= number_format($row['price'] * ($row['qty'] ?? 0), 2) ?></td>
+                          <!-- <td> <button type="button" class="btn btn-primary btn-remove">Remove</button></td> -->
+                        </tr>
                       <?php } ?>
-
+                      <tr>
+                        <!-- <td colspan="5"><button type="button" class="btn btn-primary" id="btn_add_medicine">Add</button>
+                        </td> -->
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
+          <div class="tab-pane fade" id="pills-lab" role="tabpanel" aria-labelledby="pills-lab-tab">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Lab/Equipment</h6>
@@ -168,21 +185,26 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
 
                     <tbody>
                       <?php foreach (get_all("select s.*,ss.price,ss.name from tbl_appointment_equipment s inner join tbl_equipment ss on ss.id = s.equipment_id where s.appointment_id = $id") as $row) { ?>
-                      <tr>
-                        <td class="text-uppercase"><?= strtoupper($row['result']??'')?></td>
-                        <td><?= dynamic_dropdown('tbl_equipment', 'eequipment[]', $row['equipment_id'], true) ?></td>
-                        <td style="text-align: right;" class="text-uppercase"><?= $row['qty']??0 ?></td>
-                        <td style="text-align: right;"><?= number_format($row['price'] *( $row['qty']??0),2) ?></td>
-                      </tr>
+                        <tr>
+                          <td><input disabled type="text" name="eresult[]" value="<?= strtoupper($row['result'] ?? '') ?>" class="form-control text-uppercase"></td>
+                          <td><?= dynamic_dropdown('tbl_equipment', 'eequipment[]', $row['equipment_id'],true) ?></td>
+                          <td><input disabled type="number" data-calc name="eqty[]" value="<?= $row['qty'] ?? 0 ?>" class="form-control"></td>
+                          <td style="text-align: right;"><?= number_format($row['price'] * ($row['qty'] ?? 0), 2) ?></td>
+                          <!-- <td> <button type="button" class="btn btn-primary btn-remove">Remove</button></td> -->
+                        </tr>
                       <?php } ?>
-
+                      <tr>
+                        <!-- <td colspan="5"><button type="button" class="btn btn-primary" id="btn_add_equipment" >Add</button>
+                        </td> -->
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+
+          <div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Status History</h6>
@@ -200,11 +222,11 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
 
                     <tbody>
                       <?php foreach (get_all("select x.*,date_format(x.created_date, '%M %d, %Y') as created_date  from tbl_appointment_status_history x where x.appointment_id = $id") as $row) { ?>
-                      <tr>
-                        <td><?= strtoupper($row['status']) ?></td>
-                        <td><?= strtoupper($row['remarks']) ?></td>
-                        <td><?= strtoupper($row['created_date']) ?></td>
-                      </tr>
+                        <tr>
+                          <td><?= strtoupper($row['status']) ?></td>
+                          <td><?= strtoupper($row['remarks']) ?></td>
+                          <td><?= strtoupper($row['created_date']) ?></td>
+                        </tr>
                       <?php } ?>
 
                     </tbody>
@@ -213,7 +235,7 @@ $appointment = get_one("select * from tbl_appointment where id = $id");
               </div>
             </div>
           </div>
-        </div>
+
         <!-- <button type="submit" name="updatebtn" style="display:inline-block;" class="btn btn-primary">View</button> -->
         <div class="d-flex">
           <a style="margin-left:5px" href="list_appointment.php" type="button" class="btn btn-primary">Back</a>

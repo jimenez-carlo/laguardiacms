@@ -72,18 +72,18 @@ if (isset($_SESSION['auth'])) {
                   </div>
 
                   <!-- Checkbox -->
-                  <div class="form-check d-flex justify-content-start mb-4">
+                  <!-- <div class="form-check d-flex justify-content-start mb-4">
                     <input class="form-check-input" type="checkbox" value="" id="form1Example3"
                       onclick="myFunction()" />
                     <label class="form-check-label"> Show Password </label>
-                  </div>
+                  </div> -->
 
                   <button class="btn btn-primary btn-lg btn-block" type="submit" name="login_btn">Login</button>
                 </form>
-                <br>
+                <!-- <br>
                 <div class="text-center">
                   <a class="big" href="register.php">Don't have an Account? Register!</a>
-                </div>
+                </div> -->
 
 
               </div>
@@ -92,12 +92,12 @@ if (isset($_SESSION['auth'])) {
         </div>
       </div>
     </section>
-    <footer class="sticky-footer">
+    <!-- <footer class="sticky-footer">
       <div class="container my-auto">
         <div class="copyright text-center my-auto">
           <span>Copyright &copy; <script>
             document.write(new Date().getFullYear())
-            </script> Capstone Project</span>
+            </script> Capstone Project</span> -->
         </div>
       </div>
 

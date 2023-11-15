@@ -7,10 +7,11 @@
 
             <!-- Doctor -->
             <?php if(in_array($_SESSION['auth'], [2])){ ?>
-            <li class="nav-item">
+              <li class="nav-item">
               <a class="nav-link" href="list_appointment.php">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Appointments</span></a>
+                
             </li>
             <li class="nav-item">
               <a class="nav-link" href="list_patient.php">
@@ -33,17 +34,26 @@
                 <span>Users</span></a>
             </li>
             <?php } ?>
+            <?php if(!in_array($_SESSION['auth'], [3])){ ?>
             <li class="nav-item">
               <a class="nav-link" href="list_service.php">
                 <i class="fas fa-fw fa-briefcase"></i>
                 <span>Services</span></a>
             </li>
+            <?php } ?>
             <li class="nav-item">
               <a class="nav-link" href="list_appointment.php">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Appointments</span></a>
             </li>
-            <?php if(in_array($_SESSION['auth'], [1,3])){ ?>
+            <?php if(in_array($_SESSION['auth'], [3])){ ?>
+            <li class="nav-item">
+              <a class="nav-link" href="list_medical_record.php">
+                <i class="fas fa-fw fa-book"></i>
+                <span>Medical Record</span></a>
+            </li>
+            <?php } ?>
+            <?php if(in_array($_SESSION['auth'], [1,4])){ ?>
             <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#inventory"
                 aria-expanded="true" aria-controls="inventory">

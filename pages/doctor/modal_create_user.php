@@ -46,14 +46,16 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="recipient-name" class="col-form-label">*Contact Number:</label>
+                    <label for="recipient-name" class="col-form-label">Contact Number:</label>
                     <div class="d-flex">
                       <div class="input-group mb-2">
                         <div class="input-group-prepend">
                           <div class="input-group-text">+63</div>
                         </div>
-                        <input type="number" name="cn" class="form-control" required
-                          value="<?= isset($_POST['cn']) ? $_POST['cn'] : '' ?>" minlength="10" maxlength="10">
+                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          type = "number"
+                          maxlength = "10"
+                        name="cn" class="form-control" required value="<?= isset($_POST['cn']) ? $_POST['cn'] : '' ?>">
                       </div>
                     </div>
                   </div>
