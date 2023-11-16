@@ -4,8 +4,8 @@ include_once('../layout/header.php');
 $table = "admin";
 // List
 $list_title = "Admin";
-$list_header = ['ID', "Admin's Name", "Email", "Contact Number"];
-$list_column = ['id', "fullname", "email", "cn"];
+$list_header = [ "Admin's Name", "Email", "Contact Number"];
+$list_column = [ "fullname", "email", "cn"];
 $list_sql = "SELECT *,concat(fname,' ', mname, ' ',lname ) as fullname,concat('+63',cn) as cn  FROM $table";
 $list_del_msg = "Admin Deleted Successfully!";
 $list_enable_actions = true;
@@ -16,7 +16,8 @@ $list_actions = [
 ];
 $_SESSION['back_url'] = "list_admin.php";
 ?>
-<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-user-plus"></i> Add Admin</button>
+<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal"
+  data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-user-plus"></i> Add Admin</button>
 <br> <br>
 
 <!-- Begin Page Content -->

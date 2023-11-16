@@ -27,19 +27,19 @@ include_once('../layout/header.php');
               <input type="hidden" name="table" value="<?= $type ?>">
               <div class="form-row">
                 <div class="form-group col-md-4">
-                  <label>*First Name:</label>
+                  <label>First Name:</label>
                   <input type="text" name="fname"
                     value="<?= isset($_POST['fname']) ? $_POST['fname'] : $user->fname; ?>" class="form-control"
                     id="recipient-name">
                 </div>
                 <div class="form-group col-md-4">
-                  <label>*Middle Name:</label>
+                  <label>Middle Name:</label>
                   <input type="text" name="mname"
                     value="<?= isset($_POST['mname']) ? $_POST['mname'] : $user->mname; ?>" class="form-control"
                     id="recipient-name">
                 </div>
                 <div class="form-group col-md-4">
-                  <label>*Last Name:</label>
+                  <label>Last Name:</label>
                   <input type="text" name="lname"
                     value="<?= isset($_POST['lname']) ? $_POST['lname'] : $user->lname; ?>" class="form-control"
                     id="recipient-name">

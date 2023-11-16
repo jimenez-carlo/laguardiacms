@@ -94,6 +94,16 @@ function create_user()
     // return error("Username Already In-Use!");
   // }
 
+  $fname ?? null; 
+  $mname ?? null; 
+  $lname ?? null; 
+  $cn ?? null; 
+  $house_no ?? null; 
+  $province_id ?? null; 
+  $city_id ?? null; 
+  $barangay_id ?? null; 
+  $zip_code ?? null; 
+
   if (check_email($eml)) {
     return error("Email Already In-Use!");
   }
@@ -181,6 +191,14 @@ function update_appointment(){
   return success("Appointment Updated Successfully!");
 }
 
+function pay_appointment(){
+  extract($_POST);
+echo '<pre>';
+print_r($_POST);
+  unset($_POST);
+  return success("Appointment Payed Successfully!");
+}
+
 function change_status(){
   extract($_POST);
   query("UPDATE tbl_appointment set status = '$status', remarks = '$remarks', appointment_date = '$appointment_date' where id = $id");
@@ -196,7 +214,14 @@ function create_medicine()
   if (check_exists("tbl_medicine", "name", $name)) {
     return error("Medicine Already Exists!");
   }
-  $id = get_insert_id("INSERT INTO tbl_medicine (type, name, description, price) VALUES ('$type','$name', '$description', '$price')");
+
+  if($type == "bottle"){
+    $piece = '';
+  }else{
+    $dosage = '';
+  }
+
+  $id = get_insert_id("INSERT INTO tbl_medicine (type, name, description, price, piece, dosage) VALUES ('$type','$name', '$description', '$price', '$piece' ,'$dosage')");
   if(!empty($stock)){
     $sub_id = get_insert_id("INSERT into tbl_medicine_stock (medicine_id, stock, expiration_date) VALUES ('$id','$stock','$expiration_date')");
     $user_id = $_SESSION['user']->id;
@@ -226,7 +251,13 @@ function create_medicine_batch(){
 
 function update_medicine(){
   extract($_POST);
-  query("UPDATE tbl_medicine set name = '$name', price = '$price', description = '$description', type='$type' where id = $id ");
+
+  if($type == "bottle"){
+    $piece = '';
+  }else{
+    $dosage = '';
+  }
+  query("UPDATE tbl_medicine set name = '$name', price = '$price', description = '$description', type='$type', piece = '$piece', dosage = '$dosage' where id = $id ");
   unset($_POST);
   return success("Medicine Updated Successfully!");
 }
@@ -387,4 +418,45 @@ function sign($n) {
     }else{
       return "-".$n;
     }
+}
+
+function create_category()
+{
+  extract($_POST);
+  $title = set_category_title($table);
+
+  if (check_exists($table, "name", $name)) {
+    return error("$title Category Already Exists!");
+  }
+  query("INSERT INTO $table ( name) VALUES ('$name')");
+  unset($_POST);
+  return success("$title Category Created Successfully!");
+}
+
+function update_category()
+{
+  extract($_POST);
+  $title = set_category_title($table);
+
+  if (check_exists($table, "name", $name, $id)) {
+    return error("$title Category Already Exists!");
+  }
+  query("UPDATE $table set `name` = '$name' where id = $id");
+  unset($_POST);
+  return success("$title Updated Successfully!");
+}
+
+function set_category_title($table){
+  switch ($table) {
+    case 'tbl_service_category':
+      $title = "Service";
+      break;
+    case 'tbl_equipmentcategory':
+      $title = "Equipment";
+      break;
+    case 'tbl_medicine_category':
+      $title = "Medicine";
+      break;
+  }
+return $title;
 }

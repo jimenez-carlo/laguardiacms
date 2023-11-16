@@ -45,7 +45,6 @@ include_once('modal_create_medicine_batch_stock.php');
                         <label>*Type:</label>
                         <select name="type" id="type" class="form-control selectn" disabled>
                           <option value="Tablet" <?= $medicine->type == 'Tablet' ? 'selected' : '' ?>>Tablet</option>
-                          <option value="Capsule" <?= $medicine->type == 'Capsule' ? 'selected' : '' ?>>Capsule</option>
                           <option value="Bottle" <?= $medicine->type == 'Bottle' ? 'selected' : '' ?>>Bottle</option>
                         </select>
                       </div>
@@ -94,6 +93,8 @@ include_once('modal_create_medicine_batch_stock.php');
                       <th>Amount</th>
                       <th>From</th>
                       <th>To</th>
+                      <th>Stock In</th>
+                      <th>Stock Out</th>
                       <th>Date</th>
                     </tr>
                   </thead>
@@ -105,6 +106,8 @@ include_once('modal_create_medicine_batch_stock.php');
                       <td><?= sign($row['qty']) ?></td>
                       <td><?= sign($tmp_stock) ?></td>
                       <td><?= sign($tmp_stock += $row['qty']) ?></td>
+                      <td><?= ($row['qty'] > 0) ? sign($row['qty']) : 0 ?></td>
+                      <td><?= ($row['qty'] > 0) ? 0 : sign($row['qty']) ?></td>
                       <td><?= $row['created_date'] ?></td>
                       <!-- <td style="text-align: right;"><?= $row['stock'] ?></td> -->
                       <!-- <td style="text-align: right;"><?= number_format($medicine->price *( $row['stock']??0),2) ?></td> -->

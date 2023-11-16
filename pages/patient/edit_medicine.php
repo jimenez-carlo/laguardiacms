@@ -40,11 +40,27 @@ include_once('modal_create_medicine_batch_stock.php');
                         <label>*Type:</label>
                         <select name="type" id="type" class="form-control selectn">
                           <option value="Tablet" <?= $medicine->type == 'tablet' ? 'selected' : '' ?>>Tablet</option>
-                          <option value="Capsule" <?= $medicine->type == 'capsule' ? 'selected' : '' ?>>Capsule</option>
                           <option value="Bottle" <?= $medicine->type == 'bottle' ? 'selected' : '' ?>>Bottle</option>
                         </select>
                       </div>
                     </div>
+
+
+                    <div class="form-row piece">
+                      <div class="form-group col-md-12">
+                        <label>*Per Piece:</label>
+                        <input type="text" name="piece" class="form-control text-uppercase"
+                          value="<?= $medicine->piece ?>">
+                      </div>
+                    </div>
+                    <div class="form-row dosage">
+                      <div class="form-group col-md-12">
+                        <label>*Dosage:</label>
+                        <input type="text" name="dosage" class="form-control text-uppercase"
+                          value="<?= $medicine->dosage ?>">
+                      </div>
+                    </div>
+
 
                     <div class="form-row">
                       <div class="form-group col-md-12">
@@ -86,11 +102,11 @@ include_once('modal_create_medicine_batch_stock.php');
                 <table class="table table-bordered" width="100%" cellspacing="0" id="tbl_equipment">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <!-- <th>ID</th> -->
                       <th>Name</th>
                       <th>Expiration Date</th>
                       <th>Stock</th>
-                      <th>Total</th>
+                      <!-- <th>Total</th> -->
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -98,11 +114,11 @@ include_once('modal_create_medicine_batch_stock.php');
                   <tbody>
                     <?php foreach (get_all("select ms.*,date_format(ms.expiration_date, '%M %d, %Y') as expiration_date from tbl_medicine_stock ms where ms.medicine_id = $id") as $row) { ?>
                     <tr>
-                      <td><?= $row['id'] ?></td>
+                      <!-- <td><?= $row['id'] ?></td> -->
                       <td><?= $medicine->name ?></td>
                       <td><?= $row['expiration_date'] ?></td>
                       <td style="text-align: right;"><?= $row['stock'] ?></td>
-                      <td style="text-align: right;"><?= number_format($medicine->price *( $row['stock']??0),2) ?></td>
+                      <!-- <td style="text-align: right;"><?= number_format($medicine->price *( $row['stock']??0),2) ?></td> -->
                       <td style="d-flex">
                         <a href="view_medicine_batch.php?id=<?= $row['id'] ?>" target="_blank"
                           class="btn btn-primary">View</a>
@@ -131,6 +147,26 @@ include_once('modal_create_medicine_batch_stock.php');
         <a style="margin-left:5px" href="list_medicine.php" type="button" class="btn btn-primary">Back</a>
       </div>
       </form>
+
+      <script>
+      $(document).ready(function() {
+        $("#type").on("change", function() {
+          let val = $(this).val();
+          console.log($(".piece"));
+          if (val == 'Tablet') {
+            $(".dosage, .piece").hide();
+            $(".piece").show();
+          } else if (val == 'Bottle') {
+            $(".dosage, .piece").hide();
+            $(".dosage").show();
+          } else {
+            $(".dosage, .piece").hide();
+          }
+        });
+
+        $("#type").trigger("change");
+      });
+      </script>
 
       <?php
                 include_once('../layout/footer.php');

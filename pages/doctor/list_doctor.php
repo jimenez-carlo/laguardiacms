@@ -4,8 +4,8 @@ include_once('../layout/header.php');
 $table = "doctor";
 // List
 $list_title = "Doctor's";
-$list_header = ['ID', "Doctor's Name", "Email", "Contact Number"];
-$list_column = ['id', "fullname", "email", "cn"];
+$list_header = [ "Doctor's Name", "Email", "Contact Number"];
+$list_column = [ "fullname", "email", "cn"];
 $list_sql = "SELECT *,concat('Dr. ',fname,' ', mname, ' ',lname ) as fullname,concat('+63',cn) as cn  FROM $table";
 $list_del_msg = "Doctor Deleted Successfully!";
 $list_enable_actions = true;
@@ -16,7 +16,8 @@ $list_actions = [
 ];
 $_SESSION['back_url'] = "list_doctor.php";
 ?>
-<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-user-plus"></i> Add Doctor</button>
+<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal"
+  data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-user-plus"></i> Add Doctor</button>
 <br> <br>
 
 <!-- Begin Page Content -->

@@ -4,8 +4,8 @@ include_once('../layout/header.php');
 $table = "tbl_services";
 // List
 $list_title = "Service's";
-$list_header = ['ID', "Name",  "Price (₱)",];
-$list_column = ['id', "name",  "price"];
+$list_header = [ "Name",  "Price (₱)",];
+$list_column = [ "name",  "price"];
 $list_sql = "SELECT * from tbl_services";
 $list_del_msg = "Service Deleted Successfully!";
 $list_enable_actions = true;
@@ -16,7 +16,8 @@ $list_actions = [
 ];
 $_SESSION['back_url'] = "list_service.php";
 ?>
-<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-plus"></i> Add Service</button>
+<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal"
+  data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-plus"></i> Add Service</button>
 <br> <br>
 
 <!-- Begin Page Content -->

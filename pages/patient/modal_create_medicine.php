@@ -45,14 +45,29 @@
                       <option selected disabled>--SELECT--</option>
                       <option value="Tablet"
                         <?= (isset($_POST['type']) && "Tablet" == $_POST['type']) ? 'selected' : '' ?>>Tablet</option>
-                      <option value="Capsule"
-                        <?= (isset($_POST['type']) && "Capsule" == $_POST['type']) ? 'selected' : '' ?>>Capsule</option>
                       <option value="Bottle"
                         <?= (isset($_POST['type']) && "Bottle" == $_POST['type']) ? 'selected' : '' ?>>Bottle</option>
                     </select>
                   </div>
 
                 </div>
+
+                <div class="form-row piece">
+                  <div class="form-group col-md-12">
+                    <label for="recipient-name" class="col-form-label">Per Piece:</label>
+                    <input type="number" name="piece" class="form-control" id="recipient-name"
+                      value="<?= isset($_POST['piece']) ? $_POST['piece'] : '' ?>">
+                  </div>
+                </div>
+
+                <div class="form-row dosage">
+                  <div class="form-group col-md-12">
+                    <label for="recipient-name" class="col-form-label">Dosage:</label>
+                    <input type="text" name="dosage" class="form-control" id="recipient-name"
+                      value="<?= isset($_POST['dosage']) ? $_POST['dosage'] : '' ?>">
+                  </div>
+                </div>
+
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
@@ -89,3 +104,23 @@
     </div>
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+  $("#type").on("change", function() {
+    let val = $(this).val();
+    console.log($(".piece"));
+    if (val == 'Tablet') {
+      $(".dosage, .piece").hide();
+      $(".piece").show();
+    } else if (val == 'Bottle') {
+      $(".dosage, .piece").hide();
+      $(".dosage").show();
+    } else {
+      $(".dosage, .piece").hide();
+    }
+  });
+
+  $("#type").trigger("change");
+});
+</script>

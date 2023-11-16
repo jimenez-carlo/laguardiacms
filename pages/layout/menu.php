@@ -7,11 +7,11 @@
 
             <!-- Doctor -->
             <?php if(in_array($_SESSION['auth'], [2])){ ?>
-              <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" href="list_appointment.php">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Appointments</span></a>
-                
+
             </li>
             <li class="nav-item">
               <a class="nav-link" href="list_patient.php">
@@ -66,6 +66,23 @@
                     Medicine</a>
                   <a class="collapse-item" href="list_equipment.php"> <i class="fa-solid fa-x-ray"></i>
                     Laboratory/Equipment</a>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#category" aria-expanded="true"
+                aria-controls="category">
+                <i class="fas fa-fw fa-list"></i>
+                <span>Category</span>
+              </a>
+              <div id="category" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="list_medicine_category.php"> <i class="fa-solid fa-list"></i>
+                    Medicine</a>
+                  <a class="collapse-item" href="list_equipment_category.php"> <i class="fa-solid fa-list"></i>
+                    Laboratory/Equipment</a>
+                  <a class="collapse-item" href="list_service_category.php"> <i class="fa-solid fa-list"></i>
+                    Services</a>
                 </div>
               </div>
             </li>

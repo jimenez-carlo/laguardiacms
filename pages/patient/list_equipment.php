@@ -4,8 +4,8 @@ include_once('../layout/header.php');
 $table = "tbl_equipment";
 // List
 $list_title = "Laboratory/Equipment";
-$list_header = ['ID', "Name", "Stock", "Price (₱)",];
-$list_column = ['id', "name", "stock", "price"];
+$list_header = [ "Name", "Stock", "Price (₱)",];
+$list_column = [ "name", "stock", "price"];
 $list_sql = "SELECT * from tbl_equipment";
 $list_del_msg = "Laboratory/Equipment Deleted Successfully!";
 $list_enable_actions = true;

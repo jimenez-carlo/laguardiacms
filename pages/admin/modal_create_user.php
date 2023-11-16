@@ -22,24 +22,24 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
+              <!-- <div class="col-md-12">
                 <h6 class="m-0 font-weight-bold text-primary">
                   <?= ucfirst($table) ?> Information
                 </h6>
                 <div class="form-row">
                   <div class="form-group col-md-4">
-                    <label for="recipient-name" class="col-form-label">*First Name:</label>
-                    <input type="text" name="fname" class="form-control" required
+                    <label for="recipient-name" class="col-form-label">First Name:</label>
+                    <input type="text" name="fname" class="form-control"
                       value="<?= isset($_POST['fname']) ? $_POST['fname'] : '' ?>">
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="recipient-name" class="col-form-label">*Middle Name:</label>
-                    <input type="text" name="mname" class="form-control" required
+                    <label for="recipient-name" class="col-form-label">Middle Name:</label>
+                    <input type="text" name="mname" class="form-control"
                       value="<?= isset($_POST['mname']) ? $_POST['mname'] : '' ?>">
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="recipient-name" class="col-form-label">*Last Name:</label>
-                    <input type="text" name="lname" class="form-control" required
+                    <label for="recipient-name" class="col-form-label">Last Name:</label>
+                    <input type="text" name="lname" class="form-control"
                       value="<?= isset($_POST['lname']) ? $_POST['lname'] : '' ?>">
                   </div>
                 </div>
@@ -52,10 +52,10 @@
                         <div class="input-group-prepend">
                           <div class="input-group-text">+63</div>
                         </div>
-                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                          type = "number"
-                          maxlength = "10"
-                        name="cn" class="form-control" required value="<?= isset($_POST['cn']) ? $_POST['cn'] : '' ?>">
+                        <input
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          type="number" maxlength="10" name="cn" class="form-control" required
+                          value="<?= isset($_POST['cn']) ? $_POST['cn'] : '' ?>">
                       </div>
                     </div>
                   </div>
@@ -108,7 +108,7 @@
                       readonly value="<?= isset($_POST['zip_code']) ? $_POST['zip_code'] : '2815' ?>">
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-12">
                 <h6 class="m-0 font-weight-bold text-primary">
                   Login Credentials
