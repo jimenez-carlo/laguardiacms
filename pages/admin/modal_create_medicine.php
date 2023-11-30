@@ -32,11 +32,23 @@
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-12">
+                    <label for="recipient-name" class="col-form-label">*Category:</label>
+                    <select name="category_id" id="category_id" class="form-control" required>
+                      <?php foreach (get_all("select * from tbl_medicine_category") as $res) {?>
+                      <option value="<?= $res['id'] ?>"><?= $res['name'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-12">
                     <label for="recipient-name" class="col-form-label">*Description:</label>
                     <textarea name="description" id="" cols="30" rows="2"
                       class="form-control"><?= isset($_POST['description']) ? $_POST['description'] : '' ?></textarea>
                   </div>
                 </div>
+
 
                 <div class="form-row">
                   <div class="form-group col-md-12">

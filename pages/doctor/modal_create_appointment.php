@@ -8,7 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="dynamic_content">
         <form method="post" enctype="multipart/form-data">
           <div class="container">
             <div class="row">

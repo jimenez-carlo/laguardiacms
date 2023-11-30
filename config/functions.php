@@ -56,7 +56,15 @@ function field_replacer($value, $sql, $array){
 }
 
 function format_date($date){
-  return date_format($date,"F d, Y");
+  if(empty($date)){
+      return '';
+  }
+
+
+
+  $newDate = DateTime::createFromFormat("Y-m-d", $date);
+  $newDate = $newDate->format('F d, Y'); // for example
+  return $newDate;
 }
 
 function upload($file, $delete_file = "", $path = "../../files/")
@@ -166,6 +174,15 @@ function create_appointment(){
   return success("Appointment Created Successfully!");
 }
 
+function create_appointmentv2(){
+  extract($_POST);
+  
+  $id = get_insert_id("INSERT INTO tbl_appointment (patient_id, doctor_id, appointment_date, time_id) VALUES ('$patient_id', '$doctor_id', '$appointment_date', '$time_id')");
+  insert_appointment_history($id);
+  unset($_POST);
+  return success("Appointment Created Successfully!");
+}
+
 function update_appointment(){
   extract($_POST);
   query("UPDATE tbl_appointment set patient_id = '$patient_id', doctor_id = '$doctor_id', appointment_date = '$appointment_date', remarks = '$remarks' where id = $id ");
@@ -193,9 +210,12 @@ function update_appointment(){
 
 function pay_appointment(){
   extract($_POST);
-echo '<pre>';
-print_r($_POST);
   unset($_POST);
+  $change = abs($total-$amount);
+  $paid_date = date('Y-m-d');
+  $discount_flag = $discounted ?? 0;
+  query("INSERT into tbl_appointment_payment (appointment_id,patient_id,amount,`change`,paid_date, discount_flag) values ('$id','$patient_id','$amount','$change','$paid_date', '$discount_flag')");
+  
   return success("Appointment Payed Successfully!");
 }
 
@@ -221,7 +241,7 @@ function create_medicine()
     $dosage = '';
   }
 
-  $id = get_insert_id("INSERT INTO tbl_medicine (type, name, description, price, piece, dosage) VALUES ('$type','$name', '$description', '$price', '$piece' ,'$dosage')");
+  $id = get_insert_id("INSERT INTO tbl_medicine (type, name, description, price, piece, dosage, medicine_category_id) VALUES ('$type','$name', '$description', '$price', '$piece' ,'$dosage', '$category_id')");
   if(!empty($stock)){
     $sub_id = get_insert_id("INSERT into tbl_medicine_stock (medicine_id, stock, expiration_date) VALUES ('$id','$stock','$expiration_date')");
     $user_id = $_SESSION['user']->id;
@@ -257,7 +277,7 @@ function update_medicine(){
   }else{
     $dosage = '';
   }
-  query("UPDATE tbl_medicine set name = '$name', price = '$price', description = '$description', type='$type', piece = '$piece', dosage = '$dosage' where id = $id ");
+  query("UPDATE tbl_medicine set name = '$name', price = '$price', description = '$description', type='$type', piece = '$piece', dosage = '$dosage', medicine_category_id = '$category_id' where id = $id ");
   unset($_POST);
   return success("Medicine Updated Successfully!");
 }
@@ -286,14 +306,14 @@ function create_equipment()
   if (check_exists("tbl_equipment", "name", $name)) {
     return error("Laboratory/Equipment Already Exists!");
   }
-  $id = get_insert_id("INSERT INTO tbl_equipment ( name, description, price, stock) VALUES ('$name', '$description', '$price', '$stock')");
+  $id = get_insert_id("INSERT INTO tbl_equipment ( name, description, price, stock, equipment_category_id) VALUES ('$name', '$description', '$price', '$stock', '$category_id')");
   unset($_POST);
   return success("Laboratory/Equipment Created Successfully!");
 }
 
 function update_equipment(){
   extract($_POST);
-  query("UPDATE tbl_equipment set name = '$name', price = '$price', description = '$description', stock='$stock' where id = $id ");
+  query("UPDATE tbl_equipment set name = '$name', price = '$price', description = '$description', stock='$stock', equipment_category_id = '$category_id' where id = $id ");
   unset($_POST);
   return success("Laboratory/Equipment Updated Successfully!");
 }
@@ -304,14 +324,14 @@ function create_service()
   if (check_exists("tbl_services", "name", $name)) {
     return error("Service Already Exists!");
   }
-  $id = get_insert_id("INSERT INTO tbl_services ( name, description, price) VALUES ('$name', '$description', '$price')");
+  $id = get_insert_id("INSERT INTO tbl_services ( name, description, price, service_category_id) VALUES ('$name', '$description', '$price' , '$category_id')");
   unset($_POST);
   return success("Service Created Successfully!");
 }
 
 function update_service(){
   extract($_POST);
-  query("UPDATE tbl_services set name = '$name', price = '$price', description = '$description' where id = $id ");
+  query("UPDATE tbl_services set name = '$name', price = '$price', description = '$description', service_category_id = '$category_id' where id = $id ");
   unset($_POST);
   return success("Service Updated Successfully!");
 }
@@ -320,7 +340,7 @@ function update_service(){
 function check_exists($table, $column, $value, $id = null)
 {
   if (!empty($id)) {
-    return get_one("SELECT count(IFNULL($column,0)) as result from $table where $column = '$value' and x.id <> $id ")->result;
+    return get_one("SELECT count(IFNULL($column,0)) as result from $table where $column = '$value' and id <> $id ")->result;
   }
   return get_one("SELECT count(IFNULL($column,0)) as result from $table where $column = '$value'")->result;
 }
@@ -451,7 +471,7 @@ function set_category_title($table){
     case 'tbl_service_category':
       $title = "Service";
       break;
-    case 'tbl_equipmentcategory':
+    case 'tbl_equipment_category':
       $title = "Equipment";
       break;
     case 'tbl_medicine_category':
@@ -459,4 +479,30 @@ function set_category_title($table){
       break;
   }
 return $title;
+}
+
+function get_last_url(){
+    $link = $_SERVER['PHP_SELF'];
+    $link_array = explode('/',$link);
+    return end($link_array);
+}
+
+function calendar_monthly_slots(){
+  $start_date = [];
+  $end_date = [];
+  foreach(get_all("select * from tbl_time") as $res){
+    $start_date[] = 'T'.$res['start'];
+    $end_date[] = 'T'.$res['end'];
+  }
+
+  $slottable_dates = [];
+  for ($i=2; $i < 33; $i++) {
+    foreach(get_all("select * from tbl_time") as $res){
+      $date = date('Y-m-d', strtotime(date('Y-m-d'). " + $i days"));
+      foreach ($start_date as $key => $time) {
+        $slottable_dates[$date.$time] = ['title' => 'Available Slot', 'start' => $date.$time, 'end' => $date.$end_date[$key], 'backgroundColor' => 'green','textColor' => 'white'];
+      }
+    } 
+  }
+  return $slottable_dates;
 }

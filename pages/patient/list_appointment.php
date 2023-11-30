@@ -16,9 +16,9 @@ $list_actions = [
 ];
 $_SESSION['back_url'] = "list_appointment.php";
 ?>
-<button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal"
+<!-- <button type="button" style="margin-left: 30px; " class="btn btn-primary" data-toggle="modal"
   data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fa-solid fa-calendar"></i> Create
-  Appointment</button>
+  Appointment</button> -->
 <br> <br>
 
 <div class="col-md-12">

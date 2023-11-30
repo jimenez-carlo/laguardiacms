@@ -205,7 +205,7 @@ CREATE TABLE `patient` (
   `pic` varchar(255) DEFAULT 'default.png',
   `created_date` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +214,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES (1,'patient','','9217635295','','','','','customer@gmail.com','5qA#mrpk','patient','patient','1401','140102','140102001','patient','2815','img_11152023132129.','2023-11-15 21:22:39');
+INSERT INTO `patient` VALUES (1,'patient','','9217635295','','','','','patient1@gmail.com','patient123','patient','patient','1401','140102','140102001','patient','2815','img_11152023132129.','2023-11-15 21:22:39'),(2,'patient2','','9217635295','','','','','patient2@gmail.com','patient123','patient2','patient2','1401','140102','140102001','patient2','2815','img_11152023132129.','2023-11-15 21:22:39');
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,8 +295,9 @@ CREATE TABLE `tbl_appointment` (
   `status` varchar(45) DEFAULT 'pending' COMMENT 'pending\\nreschedule\\napproved\\nrejected\\ncancelled',
   `amount` decimal(18,2) DEFAULT 0.00,
   `change` decimal(18,2) DEFAULT 0.00,
+  `time_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +306,7 @@ CREATE TABLE `tbl_appointment` (
 
 LOCK TABLES `tbl_appointment` WRITE;
 /*!40000 ALTER TABLE `tbl_appointment` DISABLE KEYS */;
-INSERT INTO `tbl_appointment` VALUES (1,1,1,'2023-11-15','','pending',0.00,0.00),(2,17,24,'2023-11-05',NULL,'pending',0.00,0.00),(3,17,24,'2023-11-05',NULL,'pending',0.00,0.00),(4,1,1,'2023-11-15',NULL,'pending',0.00,0.00),(5,1,1,'2023-11-16','','pending',0.00,0.00),(6,1,1,'2023-11-16',NULL,'pending',0.00,0.00),(7,1,1,'2023-11-16',NULL,'pending',0.00,0.00),(8,1,1,'2023-11-16','','approved',0.00,0.00);
+INSERT INTO `tbl_appointment` VALUES (1,1,1,'2023-11-15','asdadasd','approved',0.00,0.00,1),(2,17,24,'2023-11-05',NULL,'pending',0.00,0.00,1),(3,17,24,'2023-11-05',NULL,'pending',0.00,0.00,2),(4,1,1,'2023-11-15',NULL,'pending',0.00,0.00,2),(5,1,1,'2023-11-16','','pending',0.00,0.00,1),(6,1,1,'2023-11-16',NULL,'pending',0.00,0.00,2),(7,1,1,'2023-11-16',NULL,'pending',0.00,0.00,3),(8,1,1,'2023-11-16','','approved',0.00,0.00,4),(9,1,1,'2023-11-26',NULL,'pending',0.00,0.00,1),(10,1,1,'2023-11-26',NULL,'pending',0.00,0.00,2),(11,1,1,'2023-11-27',NULL,'pending',0.00,0.00,1),(12,1,1,'2023-12-02','','pending',0.00,0.00,1),(13,1,1,'2023-12-02',NULL,'pending',0.00,0.00,7),(14,1,1,'2023-12-02',NULL,'pending',0.00,0.00,2),(15,2,1,'2023-12-02',NULL,'pending',0.00,0.00,3),(16,1,1,'2023-12-02',NULL,'pending',0.00,0.00,4),(17,1,1,'2023-12-02',NULL,'pending',0.00,0.00,5),(18,1,1,'2023-12-02',NULL,'pending',0.00,0.00,6);
 /*!40000 ALTER TABLE `tbl_appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,7 +324,7 @@ CREATE TABLE `tbl_appointment_equipment` (
   `qty` int(11) DEFAULT NULL,
   `result` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +333,7 @@ CREATE TABLE `tbl_appointment_equipment` (
 
 LOCK TABLES `tbl_appointment_equipment` WRITE;
 /*!40000 ALTER TABLE `tbl_appointment_equipment` DISABLE KEYS */;
-INSERT INTO `tbl_appointment_equipment` VALUES (43,1,1,2,'TEST'),(47,5,1,1,''),(48,5,1,1,''),(49,5,1,1,'');
+INSERT INTO `tbl_appointment_equipment` VALUES (43,1,1,2,'TEST'),(47,5,1,1,''),(48,5,1,1,''),(49,5,1,1,''),(50,12,1,1,''),(51,12,1,1,'');
 /*!40000 ALTER TABLE `tbl_appointment_equipment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -350,7 +351,7 @@ CREATE TABLE `tbl_appointment_medicine` (
   `qty` int(11) DEFAULT NULL,
   `result` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -359,7 +360,7 @@ CREATE TABLE `tbl_appointment_medicine` (
 
 LOCK TABLES `tbl_appointment_medicine` WRITE;
 /*!40000 ALTER TABLE `tbl_appointment_medicine` DISABLE KEYS */;
-INSERT INTO `tbl_appointment_medicine` VALUES (52,1,1,1,NULL),(53,8,1,1,NULL),(54,8,1,1,NULL);
+INSERT INTO `tbl_appointment_medicine` VALUES (52,1,1,1,NULL),(63,8,1,1,NULL),(64,8,1,1,NULL),(65,12,1,1,NULL),(66,12,1,1,NULL);
 /*!40000 ALTER TABLE `tbl_appointment_medicine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,8 +378,9 @@ CREATE TABLE `tbl_appointment_payment` (
   `amount` decimal(18,2) DEFAULT NULL,
   `change` decimal(18,2) DEFAULT NULL,
   `paid_date` date DEFAULT NULL,
+  `discount_flag` tinyint(4) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,6 +389,7 @@ CREATE TABLE `tbl_appointment_payment` (
 
 LOCK TABLES `tbl_appointment_payment` WRITE;
 /*!40000 ALTER TABLE `tbl_appointment_payment` DISABLE KEYS */;
+INSERT INTO `tbl_appointment_payment` VALUES (1,8,1,3000.00,2376.00,NULL,0),(10,1,1,2000.00,488.00,'2023-11-30',1);
 /*!40000 ALTER TABLE `tbl_appointment_payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -404,7 +407,7 @@ CREATE TABLE `tbl_appointment_services` (
   `qty` int(11) DEFAULT NULL,
   `result` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -413,7 +416,7 @@ CREATE TABLE `tbl_appointment_services` (
 
 LOCK TABLES `tbl_appointment_services` WRITE;
 /*!40000 ALTER TABLE `tbl_appointment_services` DISABLE KEYS */;
-INSERT INTO `tbl_appointment_services` VALUES (53,1,1,1,'TEST'),(54,5,1,2,''),(55,5,18,1,''),(56,5,11,1,'');
+INSERT INTO `tbl_appointment_services` VALUES (53,1,1,1,'TEST'),(54,5,1,2,''),(55,5,18,1,''),(56,5,11,1,''),(64,8,11,1,''),(65,8,1,1,''),(66,12,1,1,'test');
 /*!40000 ALTER TABLE `tbl_appointment_services` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,7 +434,7 @@ CREATE TABLE `tbl_appointment_status_history` (
   `remarks` varchar(45) DEFAULT NULL,
   `created_date` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,7 +443,7 @@ CREATE TABLE `tbl_appointment_status_history` (
 
 LOCK TABLES `tbl_appointment_status_history` WRITE;
 /*!40000 ALTER TABLE `tbl_appointment_status_history` DISABLE KEYS */;
-INSERT INTO `tbl_appointment_status_history` VALUES (1,38,'pending','','2023-11-05 10:53:20'),(2,39,'pending','','2023-11-05 11:06:35'),(3,40,'pending','','2023-11-05 11:07:54'),(4,4,'pending','','2023-11-15 21:23:19'),(5,5,'pending','','2023-11-16 15:16:16'),(6,6,'pending','','2023-11-17 03:11:43'),(7,7,'pending','','2023-11-17 03:12:02'),(8,8,'pending','','2023-11-17 03:13:27'),(9,8,'approved','','2023-11-17 03:16:47');
+INSERT INTO `tbl_appointment_status_history` VALUES (1,38,'pending','','2023-11-05 10:53:20'),(2,39,'pending','','2023-11-05 11:06:35'),(3,40,'pending','','2023-11-05 11:07:54'),(4,4,'pending','','2023-11-15 21:23:19'),(5,5,'pending','','2023-11-16 15:16:16'),(6,6,'pending','','2023-11-17 03:11:43'),(7,7,'pending','','2023-11-17 03:12:02'),(8,8,'pending','','2023-11-17 03:13:27'),(9,8,'approved','','2023-11-17 03:16:47'),(10,1,'cancelled','testsetset','2023-11-21 17:20:46'),(11,1,'approved','asdadasd','2023-11-21 17:21:00'),(12,9,'pending','','2023-11-26 17:30:21'),(13,10,'pending','','2023-11-26 17:48:27'),(14,11,'pending','','2023-11-26 17:48:43'),(15,12,'pending','','2023-11-30 18:05:39'),(16,13,'pending','','2023-11-30 18:06:21'),(17,14,'pending','','2023-11-30 18:06:36'),(18,15,'pending','','2023-11-30 18:06:40'),(19,16,'pending','','2023-11-30 18:07:24'),(20,17,'pending','','2023-11-30 18:07:29'),(21,18,'pending','','2023-11-30 18:07:33');
 /*!40000 ALTER TABLE `tbl_appointment_status_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -700,7 +703,7 @@ CREATE TABLE `tbl_service_category` (
 
 LOCK TABLES `tbl_service_category` WRITE;
 /*!40000 ALTER TABLE `tbl_service_category` DISABLE KEYS */;
-INSERT INTO `tbl_service_category` VALUES (1,'Category 1'),(2,'Category 2'),(3,'Category 3');
+INSERT INTO `tbl_service_category` VALUES (1,'Category 11'),(2,'Category 2'),(3,'Category 3');
 /*!40000 ALTER TABLE `tbl_service_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -729,6 +732,32 @@ LOCK TABLES `tbl_services` WRITE;
 /*!40000 ALTER TABLE `tbl_services` DISABLE KEYS */;
 INSERT INTO `tbl_services` VALUES (1,'CBC','Complete blood count',500.00,1),(2,'Fasting Blood Sugar','Measure blood sugar (not eating)',250.00,1),(3,'Blood Uric Acid','Detect high levels of this compound in the blood ',250.00,1),(4,'Creatinine','Test is done to see how well  kidneys are working',250.00,1),(5,'Blood Urea Nitrigen','Measures the amount of urea nitrogen in your blood. Urea nitrogen is a waste product',250.00,1),(6,'Thyroid Function Test','Thyroid function test (TFT) commonly refers to the quantitation of thyroid stimulating hormone (TSH)',2640.00,1),(7,'PSA (Prostate-specific antigen)','Prostate-specific antigen, or PSA, is a protein produced by normal, as well as malignant, cells of the prostate gland. The PSA test measures the level of PSA in the blood',1200.00,1),(8,'HBsAg (Hepatitis B surface antigen)','This test can detect the actual presence of the hepatitis B virus (called the “surface antigen”) in your blood.',350.00,1),(9,'ALT (SGPT)','ALT stands for alanine transaminase. It is an enzyme found mostly in the liver. An ALT test measures the amount of ALT in the blood',470.00,1),(10,'AST (SGOT)','The test is commonly used to help diagnose liver damage or disease',470.00,1),(11,'Urinalysis','It\'s used to detect and manage a wide range of disorders, such as urinary tract infections, kidney disease and diabetes.',100.00,1),(12,'Fecalysis','Fecalysis is a series of tests done on a stool (feces) sample to help diagnose certain conditions affecting the digestive tract. ',120.00,1),(13,'Lipid Profile','A lipid profile or lipid panel is a panel of blood tests used to find abnormalities in lipids, such as cholesterol and triglycerides.',1375.00,1),(14,'Hemoglobin A1c','HbA1C) test is a blood test that shows what your average blood sugar (glucose) level was over the past two to three months',1150.00,1),(15,'Potassium and Sodium','Electrolytes that help your body function normally by maintaining fluid and blood volume.',600.00,1),(16,'Ultrasound','An imaging method that uses sound waves to produce images of structures within your body.',1100.00,1),(17,'X-ray','X-rays are a form of electromagnetic radiation, similar to visible light.',0.00,1),(18,'Pharmacy',NULL,0.00,1),(19,'ECG (Electrocardiography)','An electrocardiogram (ECG) is a simple, non-invasive test that records the electrical activity of the heart.',0.00,1),(21,'test','test',231.00,1),(26,'tes23','test345',231.00,1),(27,'anti rabbies shot','anti rabbies',500.00,1);
 /*!40000 ALTER TABLE `tbl_services` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_time`
+--
+
+DROP TABLE IF EXISTS `tbl_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(45) DEFAULT NULL,
+  `start` time DEFAULT NULL,
+  `end` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_time`
+--
+
+LOCK TABLES `tbl_time` WRITE;
+/*!40000 ALTER TABLE `tbl_time` DISABLE KEYS */;
+INSERT INTO `tbl_time` VALUES (1,'AM','08:00:00','09:00:00'),(2,'AM','09:00:00','10:00:00'),(3,'AM','10:00:00','11:00:00'),(4,'AM','11:00:00','12:00:00'),(5,'PM','13:00:00','14:00:00'),(6,'PM','14:00:00','15:00:00'),(7,'PM','15:00:00','16:00:00'),(8,'PM','16:00:00','17:00:00'),(9,'PM','17:00:00','18:00:00'),(10,'PM','18:00:00','19:00:00'),(11,'PM','19:00:00','20:00:00'),(12,'PM','20:00:00','21:00:00');
+/*!40000 ALTER TABLE `tbl_time` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -765,4 +794,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-17  3:53:46
+-- Dump completed on 2023-11-30 21:02:43

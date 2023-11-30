@@ -4,9 +4,9 @@ include_once('../layout/header.php');
 $table = "tbl_services";
 // List
 $list_title = "Service's";
-$list_header = [ "Name",  "Price (₱)",];
-$list_column = [ "name",  "price"];
-$list_sql = "SELECT * from tbl_services";
+$list_header = [ "Name","Category",  "Price (₱)",];
+$list_column = [ "name","category",  "price"];
+$list_sql = "SELECT s.*,sc.name as category from tbl_services s inner join tbl_service_category sc on sc.id = s.service_category_id";
 $list_del_msg = "Service Deleted Successfully!";
 $list_enable_actions = true;
 $list_actions = [

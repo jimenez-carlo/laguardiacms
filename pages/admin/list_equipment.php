@@ -4,9 +4,9 @@ include_once('../layout/header.php');
 $table = "tbl_equipment";
 // List
 $list_title = "Laboratory/Equipment";
-$list_header = [ "Name", "Stock", "Price (₱)",];
-$list_column = [ "name", "stock", "price"];
-$list_sql = "SELECT * from tbl_equipment";
+$list_header = [ "Name","Category", "Stock", "Price (₱)",];
+$list_column = [ "name","category", "stock", "price"];
+$list_sql = "SELECT e.*,ec.name as category from tbl_equipment e inner join tbl_equipment_category ec on ec.id = e.equipment_category_id";
 $list_del_msg = "Laboratory/Equipment Deleted Successfully!";
 $list_enable_actions = true;
 $list_actions = [

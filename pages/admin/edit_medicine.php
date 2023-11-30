@@ -70,6 +70,17 @@ include_once('modal_create_medicine_batch_stock.php');
                       </div>
                     </div>
 
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="recipient-name" class="col-form-label">*Category:</label>
+                        <select name="category_id" id="category_id" class="form-control" required>
+                          <?php foreach (get_all("select * from tbl_equipment_category") as $res) {?>
+                          <option value="<?= $res['id'] ?>" <?= ($res['id'] = $medicine->medicine_category_id) ?>>
+                            <?= $res['name'] ?></option>
+                          <?php } ?>
+                        </select>
+                      </div>
+                    </div>
 
                     <div class="form-row">
                       <div class="form-group col-md-12">

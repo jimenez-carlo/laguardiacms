@@ -4,9 +4,24 @@ window.onload = function () {
     if (typeof (calendar) != 'undefined' && calendar != null) {
       var calendarinstance = new FullCalendar.Calendar(calendar, {
           events: public_events,
-          initialView: 'dayGridMonth',
-         
-          aspectRatio:3
+          // initialView: 'dayGridMonth',
+        aspectRatio: 3,
+        eventClick: function (info) {
+          if (info.event._def.title == 'Unavailable') {
+            return false;
+          }
+          const formData = new FormData();
+          formData.append('appointment_date',info.event.start.toISOString().slice(0, 10) );
+          formData.append('start_time',info.event.start.toLocaleTimeString('en-US', { hour12: false }));
+          (async () => {
+            const response = await fetch('modal_dynamic_create_appointment.php', { method: 'POST', body: formData });
+            const result = await response.text();
+            document.getElementById('dynamic_content').innerHTML = result;
+            $('#exampleModal').modal('show');
+          })();
+
+  }
+              
         });
         calendarinstance.render();
     }

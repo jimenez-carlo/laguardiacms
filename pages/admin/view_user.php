@@ -249,24 +249,29 @@ where a.patient_id = ".$_GET['id']." and a.status = 'completed' group by a.id
                   <table class="table table-sm table-bordered" width="100%" cellspacing="0" id="tbl_service">
                     <thead>
                       <tr>
-                        <th>Date</th>
-                        <th>Medical Service</th>
-                        <th>Laboratory/Equipment Test</th>
-                        <th>Doctor</th>
+                        <th>Appointment Date</th>
+                        <th>Checkup Status</th>
+                        <th>Paid Date</th>
+                        <th>Paid Status</th>
+                        <th>Amount</th>
+                        <th>Change</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
 
                     <tbody>
 
-                      <?php foreach (get_all("SELECT * from tbl_appointment_payment where a.patient_id = ".$_GET['id']." order by paid_date ") as $res) { ?>
+                      <?php foreach (get_all("SELECT a.*,p.*,ifnull(p.appointment_id, 0) as paid_status,a.id FROM tbl_appointment a left join tbl_appointment_payment p on p.appointment_id = a.id where p.patient_id = ".$_GET['id']." order by p.paid_date ") as $res) { ?>
 
                       <tr>
-                        <td><?= $res['appointment_date'] ?></td>
-                        <td><?= html_entity_decode($res['service'] ?? '<p></p>') ?></td>
-                        <td><?= $res['laboratory'] ?></td>
-                        <td><?= $res['doctor'] ?></td>
-                        <td><a href="view_appointment.php?id=<?= $res['id'] ?>" class="btn btn-primary">View</a>
+                        <td><?= format_date($res['appointment_date']) ?></td>
+                        <td><?= strtoupper($res['status']) ?></td>
+                        <td><?= format_date($res['paid_date'] ?? null) ?></td>
+                        <td><?= ($res['paid_status']) ? 'PAID' : 'UNPAID' ?></td>
+                        <td class="text-right"><?= number_format($res['amount']) ?></td>
+                        <td class="text-right"><?= number_format($res['change']) ?></td>
+                        <td><a href="view_appointment.php?id=<?= $res['id'] ?>" class="btn btn-primary"><i
+                              class="fa fa-eye"></i></a>
                         </td>
                       </tr>
                       <?php }  ?>

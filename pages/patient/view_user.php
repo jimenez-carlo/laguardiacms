@@ -172,8 +172,21 @@ include_once('../layout/header.php');
           </div>
         </div>
         <?php if($_GET['type'] == 'patient'){ ?>
-        <div class="row">
-          <div class="col-md-12">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="pills-services-tab" data-toggle="pill" href="#pills-services" role="tab"
+              aria-controls="pills-services" aria-selected="true">Medical History</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-medicine-tab" data-toggle="pill" href="#pills-medicine" role="tab"
+              aria-controls="pills-medicine" aria-selected="false">Payment Historry</a>
+          </li>
+        </ul>
+
+
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-services" role="tabpanel"
+            aria-labelledby="pills-services-tab">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Medical History</h6>
@@ -214,7 +227,8 @@ where a.patient_id = ".$_GET['id']." and a.status = 'completed' group by a.id
                         <td><?= html_entity_decode($res['service'] ?? '<p></p>') ?></td>
                         <td><?= $res['laboratory'] ?></td>
                         <td><?= $res['doctor'] ?></td>
-                        <td><a href="view_appointment.php?id=<?= $res['id'] ?>" class="btn btn-primary">View</a></td>
+                        <td><a href="view_appointment.php?id=<?= $res['id'] ?>" class="btn btn-primary">View</a>
+                        </td>
                       </tr>
                       <?php }  ?>
 
@@ -224,24 +238,73 @@ where a.patient_id = ".$_GET['id']." and a.status = 'completed' group by a.id
               </div>
             </div>
           </div>
+          <div class="tab-pane fade" id="pills-medicine" role="tabpanel" aria-labelledby="pills-medicine-tab">
 
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Payment Bill History</h6>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered" width="100%" cellspacing="0" id="tbl_service">
+                    <thead>
+                      <tr>
+                        <th>Appointment Date</th>
+                        <th>Checkup Status</th>
+                        <th>Paid Date</th>
+                        <th>Paid Status</th>
+                        <th>Amount</th>
+                        <th>Change</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+
+                      <?php foreach (get_all("SELECT a.*,p.*,ifnull(p.appointment_id, 0) as paid_status,a.id FROM tbl_appointment a left join tbl_appointment_payment p on p.appointment_id = a.id where p.patient_id = ".$_GET['id']." order by p.paid_date ") as $res) { ?>
+
+                      <tr>
+                        <td><?= format_date($res['appointment_date']) ?></td>
+                        <td><?= strtoupper($res['status']) ?></td>
+                        <td><?= format_date($res['paid_date'] ?? null) ?></td>
+                        <td><?= ($res['paid_status']) ? 'PAID' : 'UNPAID' ?></td>
+                        <td class="text-right"><?= number_format($res['amount']) ?></td>
+                        <td class="text-right"><?= number_format($res['change']) ?></td>
+                        <td><a href="view_appointment.php?id=<?= $res['id'] ?>" class="btn btn-primary"><i
+                              class="fa fa-eye"></i></a>
+                        </td>
+                      </tr>
+                      <?php }  ?>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <?php } ?>
-        <!-- <button type="submit" name="updatebtn" style="display:inline-block;" class="btn btn-primary">View</button> -->
-        <a style="display:inline-block;" href="<?= $_SESSION['back_url'] ?>" type="button"
-          class="btn btn-primary">Back</a>
 
-      </form>
-      <?php
+
+    </div>
+  </div>
+
+
+
+  <?php } ?>
+  <!-- <button type="submit" name="updatebtn" style="display:inline-block;" class="btn btn-primary">View</button> -->
+  <a style="display:inline-block;" href="<?= $_SESSION['back_url'] ?>" type="button" class="btn btn-primary">Back</a>
+
+  </form>
+  <?php
                         }
                     } else {
                         ?>
-      <h4>No Records Found</h4>
-      <?php
+  <h4>No Records Found</h4>
+  <?php
                     }
                 }
                 ?>
 
-      <?php
+  <?php
                 include_once('../layout/footer.php');
                 ?>

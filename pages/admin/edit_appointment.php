@@ -129,8 +129,8 @@ include_once('../layout/header.php');
                         <td><input type="text" name="sresult[]" value="<?= strtoupper($row['result'] ?? '') ?>"
                             class="form-control text-uppercase"></td>
                         <td><?= dynamic_dropdown('tbl_services', 'sservice[]', $row['service_id']) ?></td>
-                        <td><input type="number" data-calc name="sqty[]" value="<?= $row['qty'] ?? 0 ?>"
-                            class="form-control"></td>
+                        <td><input type='number' disabled value="1" class="form-control"><input type="hidden" data-calc
+                            name="sqty[]" value="<?= $row['qty'] ?? 0 ?>" class="form-control"></td>
                         <td style="text-align: right;"><?= number_format($row['price'] * ($row['qty'] ?? 0), 2) ?></td>
                         <td> <button type="button" class="btn btn-primary btn-remove">Remove</button></td>
                       </tr>
@@ -312,7 +312,7 @@ include_once('../layout/header.php');
     let index = xTable.rows.length - 1;
     let tr = xTable.insertRow(index);
     tr.innerHTML =
-      "<td><input type='text' name='sresult[]' class='form-control text-uppercase'></td> <td><select name='sservice[]' class='form-control'><?= $service_options ?></select></td> <td><input type='number' name='sqty[]' class='form-control' value='1'></td> </td><td style='text-align: right;'><?= reset($service_array) ?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
+      "<td><input type='text' name='sresult[]' class='form-control text-uppercase'></td> <td><select name='sservice[]' class='form-control'><?= $service_options ?></select></td> <td><input type='text' disabled value='1' class='form-control'><input type='hidden' name='sqty[]' class='form-control' value='1'></td> </td><td style='text-align: right;'><?= reset($service_array) ?></td><td><button type='button' class='btn btn-primary btn-remove'>Remove</button></td>";
   });
 
   let btn_add_medicine = document.getElementById("btn_add_medicine");

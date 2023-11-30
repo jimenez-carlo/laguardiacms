@@ -22,8 +22,7 @@ include_once('../layout/header.php');
 
   <!-- Content Row -->
   <div class="row">
-
-
+    <?= isset($_POST['create_appointmentv2']) ?create_appointmentv2() : ''; ?>
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-success shadow h-100 py-2">
@@ -129,22 +128,45 @@ include_once('../layout/header.php');
     </div>
   </div>
   <?php 
-$tmp = [];
-foreach (get_all("select UPPER(CONCAT(a.status,' - ' ,IFNULL(p.fname,''),' ',IFNULL(p.mname, ''),' ',IFNULL(p.lname,''))) as title,a.appointment_date as start,concat('edit_appointment.php?id=',a.id) as url,
+$tmp = calendar_monthly_slots();
+foreach (get_all("select a.id,
+concat(a.appointment_date,'T', t.start) as start,
+concat(a.appointment_date,'T', t.end) as end,
 case
-    when a.status = 'pending' then 'yellow'
-    when a.status = 'approved' then 'green'
-    when a.status = 'completed' then 'green'
-    when a.status = 'rejected' then 'red'
-    when a.status = 'cancelled' then 'red'
-    when a.status = 'reschedule' then 'blue'
+    when a.patient_id = ".$_SESSION['user']->id."  then concat('edit_appointment.php?id=',a.id)
+    when a.patient_id <> ".$_SESSION['user']->id." then null
+end
+as url
+,    
+case
+    when a.patient_id = ".$_SESSION['user']->id."  then UPPER(CONCAT(a.status,' - ' ,IFNULL(p.fname,''),' ',IFNULL(p.mname, ''),' ',IFNULL(p.lname,'')))
+    when a.patient_id <> ".$_SESSION['user']->id." then 'Unavailable'
+end    
+as title,
+case
+    when a.patient_id = ".$_SESSION['user']->id." and a.status = 'pending' then 'yellow'
+    when a.patient_id = ".$_SESSION['user']->id." and a.status = 'approved' then 'green'
+    when a.patient_id = ".$_SESSION['user']->id." and a.status = 'completed' then 'green'
+    when a.patient_id = ".$_SESSION['user']->id." and a.status = 'rejected' then 'red'
+    when a.patient_id = ".$_SESSION['user']->id." and a.status = 'cancelled' then 'red'
+    when a.patient_id = ".$_SESSION['user']->id." and a.status = 'reschedule' then 'blue'
 
+    when a.patient_id <> ".$_SESSION['user']->id." and a.status = 'pending' then 'red'
+    when a.patient_id <> ".$_SESSION['user']->id." and a.status = 'approved' then 'red'
+    when a.patient_id <> ".$_SESSION['user']->id." and a.status = 'completed' then 'red'
+    when a.patient_id <> ".$_SESSION['user']->id." and a.status = 'rejected' then 'red'
+    when a.patient_id <> ".$_SESSION['user']->id." and a.status = 'cancelled' then 'red'
+    when a.patient_id <> ".$_SESSION['user']->id." and a.status = 'reschedule' then 'red'
 end    
 as backgroundColor,
 if(a.status = 'pending', 'black', 'white')as textColor 
- from tbl_appointment a left join patient p on p.id = a.patient_id where a.patient_id = ".$_SESSION['user']->id."") as $res) {
-    $tmp[] = $res;
-};
+ from tbl_appointment a left join patient p on p.id = a.patient_id inner join tbl_time t on t.id = a.time_id where (a.patient_id = ".$_SESSION['user']->id." or a.appointment_date >= '". date('Y-m-d', strtotime(date('Y-m-d'). " + 2 days"))."')") as $res) {
+      if(empty($res['url'])){
+        unset($res['url']);
+      }
+      $tmp[$res['start']] = $res;
+}
+$tmp = array_values($tmp);
  ?>
   <script>
   var public_events = <?php echo json_encode($tmp)?>;
@@ -152,4 +174,5 @@ if(a.status = 'pending', 'black', 'white')as textColor
   <div id="calendar"></div>
   <?php
     include_once('../layout/footer.php');
+    include_once('modal_create_appointment.php');
     ?>

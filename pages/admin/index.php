@@ -22,8 +22,7 @@ include_once('../layout/header.php');
 
   <!-- Content Row -->
   <div class="row">
-
-
+    <?= isset($_POST['create_appointmentv2']) ?create_appointmentv2() : ''; ?>
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-success shadow h-100 py-2">
@@ -128,9 +127,13 @@ include_once('../layout/header.php');
       </div>
     </div>
   </div>
+
   <?php 
-$tmp = [];
-foreach (get_all("select UPPER(CONCAT(a.status,' - ' ,IFNULL(p.fname,''),' ',IFNULL(p.mname, ''),' ',IFNULL(p.lname,''))) as title,a.appointment_date as start,concat('edit_appointment.php?id=',a.id) as url,
+$tmp = calendar_monthly_slots();
+foreach (get_all("select UPPER(CONCAT(a.status,' - ' ,IFNULL(p.fname,''),' ',IFNULL(p.mname, ''),' ',IFNULL(p.lname,''))) as title,
+concat(a.appointment_date,'T', t.start) as start,
+concat(a.appointment_date,'T', t.end) as end,
+concat('edit_appointment.php?id=',a.id) as url,
 case
     when a.status = 'pending' then 'yellow'
     when a.status = 'approved' then 'green'
@@ -138,14 +141,13 @@ case
     when a.status = 'rejected' then 'red'
     when a.status = 'cancelled' then 'red'
     when a.status = 'reschedule' then 'blue'
-
 end    
 as backgroundColor,
 if(a.status = 'pending', 'black', 'white')as textColor 
-    
- from tbl_appointment a left join patient p on p.id = a.patient_id") as $res) {
-    $tmp[] = $res;
-};
+ from tbl_appointment a left join patient p on p.id = a.patient_id inner join tbl_time t on t.id = a.time_id") as $res) {
+    $tmp[$res['start']] = $res;
+}
+$tmp = array_values($tmp);
  ?>
   <script>
   var public_events = <?php echo json_encode($tmp)?>;
@@ -153,4 +155,5 @@ if(a.status = 'pending', 'black', 'white')as textColor
   <div id="calendar"></div>
   <?php
     include_once('../layout/footer.php');
+    include_once('modal_create_appointment.php');
     ?>

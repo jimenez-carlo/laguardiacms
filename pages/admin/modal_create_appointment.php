@@ -8,7 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="dynamic_content">
         <form method="post" enctype="multipart/form-data">
           <div class="container">
             <div class="row">
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <input type="hidden" name="table" value="<?= $table ?>">
+            <input type="hidden" name="table" value="<?= $table??'' ?>">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             <button type="submit" name="create_appointment" class="btn btn-primary" value="1">Submit</button>
           </div>
