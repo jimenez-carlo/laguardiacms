@@ -210,19 +210,28 @@ function update_appointment(){
 
 function pay_appointment(){
   extract($_POST);
-  unset($_POST);
   $change = abs($total-$amount);
   $paid_date = date('Y-m-d');
   $discount_flag = $discounted ?? 0;
   query("INSERT into tbl_appointment_payment (appointment_id,patient_id,amount,`change`,paid_date, discount_flag) values ('$id','$patient_id','$amount','$change','$paid_date', '$discount_flag')");
-  
+
+  unset($_POST);
   return success("Appointment Payed Successfully!");
 }
 
 function change_status(){
   extract($_POST);
   query("UPDATE tbl_appointment set status = '$status', remarks = '$remarks', appointment_date = '$appointment_date' where id = $id");
+  $customer_id = get_one("select patient_id form tbl_appointment where id = $id")->patient_id ?? 0;
   insert_appointment_history($id, $status, $remarks);
+  if($status == 'completed'){
+    foreach (get_all("select * from tbl_appointment_medicine where appointment_id = $id") as $res) {
+      $medicine_stock_id = $res['medicine_stock_id'];
+      $qty = $res['qty'];
+      query("update tbl_medicine_stock set stock = stock - $qty where id = $medicine_stock_id");
+      query("insert into tbl_medicine_stock_history (stock_id,qty,user_id, access_id) values('$medicine_stock_id', '-$qty', '$customer_id', 3)");
+    }
+  }
   unset($_POST);
   return success("Appointment Changed Status!");
 }
